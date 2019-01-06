@@ -156,7 +156,7 @@ article div{
 }
 .admin-page .meetup-item{
      height: 410px;
-     
+
 }
 .meetup-item:hover{
     box-shadow: 0 0 4px 0 rgba(46,62,72,.12), 0 4px 12px 0 rgba(46,62,72,.12);
@@ -242,7 +242,7 @@ article div{
 
 }
 .delete{
-   sfloat: right;
+   float: right;
    background: #E91E63;
 }
 
