@@ -224,37 +224,7 @@ article div{
     width: 657px;
     padding-right: 9px;
 }
-@media (min-width: 410px) {
-   .meetup-container .meetup-item {
-    max-width: calc(100% - 10px);
-  }
-  
-}
-@media (max-width: 620px){
-    .logo small{
-    display:none;
-  }
-}
-@media (min-width: 620px) {
-   .meetup-container .meetup-item {
-    /*max-width: calc(33.33333% - 10px);*/
-    max-width: calc(100% - 10px);
-  }
-}
-@media (min-width: 900px) {
-  .meetup-container .meetup-item {
-    max-width: 328px;
-    /*max-width: calc(25% - 10px);
-    /*max-width: calc(33.33333% - 10px);*/
-  }
-}
-@media (min-width: 1200px) {
-  .meetup-container .meetup-item {
-    max-width: 300px;
-    /*max-width: calc(25% - 10px);*/
-    /*max-width: calc(33.33333% - 10px);*/
-  }
-}*/
+
 
 /*form styles*/
 form{
@@ -296,6 +266,38 @@ button, input {
     width: 250px;
     display: flex;
 }
+.meetup-create{
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 70%;
+    display: flex;
+}
+.meetup-create input , .meetup-create textarea{
+    display: block;
+    width: 200%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 0.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    margin-bottom: 1rem;
+}
+.meetup-create button{
+    width: fit-content;
+    padding: 10px 50px;
+    background-color: #009688;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    color: white;
+    margin-top: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
 .sub-container p{
    text-align: center;
 }
@@ -333,4 +335,40 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
+}
+
+@media (min-width: 410px) {
+   .meetup-container .meetup-item {
+    max-width: calc(100% - 10px);
+  } 
+  .meetup-create form{
+    max-width: calc(50% - 0px);
+  }
+
+  
+}
+@media (max-width: 620px){
+    .logo small{
+    display:none;
+  }
+}
+@media (min-width: 620px) {
+   .meetup-container .meetup-item {
+    /*max-width: calc(33.33333% - 10px);*/
+    max-width: calc(100% - 10px);
+  }
+}
+@media (min-width: 900px) {
+  .meetup-container .meetup-item {
+    max-width: 328px;
+    /*max-width: calc(25% - 10px);
+    /*max-width: calc(33.33333% - 10px);*/
+  }
+}
+@media (min-width: 1200px) {
+  .meetup-container .meetup-item {
+    max-width: 300px;
+    /*max-width: calc(25% - 10px);*/
+    /*max-width: calc(33.33333% - 10px);*/
+  }
 }
