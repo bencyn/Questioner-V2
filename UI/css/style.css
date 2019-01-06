@@ -274,6 +274,10 @@ button, input {
     margin: 0 auto;
     margin-top: 50px;
     width: 250px;
+    display: flex;
+}
+.sub-container p{
+   text-align: center;
 }
 
 .submit{
