@@ -214,6 +214,12 @@ article div{
    .meetup-container .meetup-item {
     max-width: calc(100% - 10px);
   }
+  
+}
+@media (max-width: 620px){
+    .logo small{
+    display:none;
+  }
 }
 @media (min-width: 620px) {
    .meetup-container .meetup-item {
@@ -298,15 +304,18 @@ button, input {
     position: fixed;
 
 }
-
+.login-page footer{
+   position: absolute;
+}
 
 footer {
     background:#fafafb;
     height: 30px;
+    margin-top:20px;
     padding-bottom: 20px;
     text-align: center;
     color: #9E9E9E;
-    /*position: absolute;*/
+    
     left: 0;
     bottom: 0;
     width: 100%;
