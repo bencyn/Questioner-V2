@@ -523,10 +523,12 @@ footer {
   .meetup .meetup-container .meetup-item {
     max-width: calc(100% - 0px);
   } 
-  .meetup-create form , form{
+  .meetup-create form {
     max-width: calc(50% - 0px);
   }
-
+  .post-question form{
+    max-width: calc(50% - 0px);
+  }
 }
 @media (min-width: 410px){
     .post-question textarea{
