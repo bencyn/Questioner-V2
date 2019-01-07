@@ -286,7 +286,7 @@ article .sub-container{
     padding: 15px;
     border-radius: 5px;
 }
-input{
+input , textarea{
     display: block;
     width: 100%;
     padding: .375rem .75rem;
@@ -476,7 +476,32 @@ button, input {
     height: auto;
     text-overflow: ellipsis;
     overflow: hidden;
+}
 
+.post-question textarea{
+    margin-top: 25px;
+    width: 438%;
+    min-height: 121px;
+    resize: vertical;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 1.5em;
+    border: 1px solid #a5a5a5;
+}
+.post-question .m-content{
+    margin-left:58px;
+}
+.post-question button{
+    padding: 10px 50px;
+    background-color: #0095ff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    color: white;
+    margin-top: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
 }
 footer {
     background:#fafafb;
@@ -498,15 +523,25 @@ footer {
   .meetup .meetup-container .meetup-item {
     max-width: calc(100% - 0px);
   } 
-  .meetup-create form{
+  .meetup-create form , form{
     max-width: calc(50% - 0px);
   }
 
-  
+}
+@media (min-width: 410px){
+    .post-question textarea{
+     max-width: calc(200% - 0px);
+  }
+  .post-question textarea{
+     max-width: calc(200% - 0px);
+  }
 }
 @media (max-width: 620px){
     .logo small{
     display:none;
+  }
+  .post-question textarea{
+     max-width: calc(200% - 0px);
   }
 }
 @media (min-width: 620px) {
@@ -518,6 +553,10 @@ footer {
     /*max-width: calc(33.33333% - 10px);*/
     max-width: calc(100% - 0px);
   }
+  .post-question textarea{
+     max-width: calc(200% - 0px);
+  }
+   
 }
 @media (min-width: 900px) {
   .meetup-container .meetup-item {
@@ -530,6 +569,9 @@ footer {
     /*max-width: calc(25% - 10px);
     /*max-width: calc(33.33333% - 10px);*/
   }
+  .post-question textarea{
+     max-width: calc(250% - 0px);
+  }
 }
 @media (min-width: 1200px) {
   .meetup-container .meetup-item {
@@ -537,5 +579,8 @@ footer {
   }
   .meetup .meetup-container .meetup-item {
     max-width: 477px;
+  }
+  .post-question textarea{
+     max-width: calc(500% - 0px);
   }
 }
