@@ -28,8 +28,9 @@ class TestUser(BaseTest):
             "tags": ["Pentests", "Bruteforce"]
         }
         self.meetup1 = {}
+
     def test_meeetup_create_record(self):
-            url = '/api/v1/meetup/create'
+            url = 'api/v1/meetup/create'
             response= self.client.post(url, data=json.dumps(self.meetup), content_type="application/json")
             result = json.loads(response.data.decode('UTF-8'))
 
@@ -43,6 +44,12 @@ class TestUser(BaseTest):
                     "tags": ["RESTful API", "JSON Data"],
                 }
             ])
+
+    def test_get_meetup_record(self):
+            url = 'api/v1/meetup/'
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+
 if __name__ == "__main__":
     unittest.main()
    
