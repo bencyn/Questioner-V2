@@ -5,6 +5,11 @@ from ..models import meetup_model
 meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetup')
 meetup_object = meetup_model.Meetup()
 
+@meetup.route("/", methods=['GET'])
+def getMeetups():
+    ''' fetch all meetup records'''
+    return jsonify(meetup_object.get_meetup()),201
+    
 
 @meetup.route('/create', methods = ['POST'])
 def create_meetup():
