@@ -24,3 +24,6 @@ class Meetup(object):
 
         self.meetups.append(meetup)
         return meetup
+
+    def get_meetup(self):
+        return self.meetups
