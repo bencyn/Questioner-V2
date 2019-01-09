@@ -1,17 +1,11 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
-import re, itertools
-
 from ..models import meetup_model
 
 meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetup')
 meetup_object = meetup_model.Meetup()
 
-# # get questions
-@meetup.route("/", methods=['GET'])
-# def getMeetups():
-#     return "hello world"
-#     # return jsonify(meetup_model)
+
 @meetup.route('/create', methods = ['POST'])
 def create_meetup():
     '''endpoint to create a meetup'''
