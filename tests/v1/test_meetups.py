@@ -1,13 +1,6 @@
-#Library imports
-import json
-# from passlib.hash import pbkdf2_sha256 as sha256
-import datetime
+import json ,unittest,instance,datetime
 from .base_tests import BaseTest
 from app.v1.models.meetup_model import Meetup
-
-import unittest
-import json
-import instance
 from app.v1.views import meetup_view
 from app.v1.models import meetup_model
 from app import create_app
@@ -18,7 +11,7 @@ class TestUser(BaseTest):
     def setUp(self):
         """ defining test data"""
         app.config.from_object(instance.config.TestingConfig)
-        self.client = app.test_client
+        self.client = app.test_client()
 
         self.meetup = {
             "topic": "Ethical Hacking Hackathon",
