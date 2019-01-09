@@ -2,7 +2,6 @@ from datetime import datetime
 
 meetup = []
 
-
 class Meetup(object):
     """ meetups class """
 
