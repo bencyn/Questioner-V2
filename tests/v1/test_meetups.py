@@ -23,7 +23,7 @@ class TestUser(BaseTest):
         self.meetup1 = {}
 
     def test_meeetup_create_record(self):
-            url = 'api/v1/meetups/create'
+            url = 'api/v1/meetups'
             response= self.client.post(url, data=json.dumps(self.meetup), content_type="application/json")
             result = json.loads(response.data.decode('UTF-8'))
 
