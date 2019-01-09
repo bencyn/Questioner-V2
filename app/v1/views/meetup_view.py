@@ -2,13 +2,13 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from ..models import meetup_model
 
-meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetup')
+meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetups')
 meetup_object = meetup_model.Meetup()
 
-@meetup.route("/", methods=['GET'])
+@meetup.route("/upcoming/", methods=['GET'])
 def getMeetups():
     ''' fetch all meetup records'''
-    return jsonify(meetup_object.get_meetup()),201
+    return jsonify(meetup_object.get_meetup()),200
     
 
 @meetup.route('/create', methods = ['POST'])
