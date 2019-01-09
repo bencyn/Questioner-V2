@@ -11,7 +11,7 @@ def getMeetups():
     return jsonify(meetup_object.get_meetup()),200
     
 
-@meetup.route('/create', methods = ['POST'])
+@meetup.route('/', methods = ['POST'])
 def create_meetup():
     '''endpoint to create a meetup'''
     data = request.get_json()
