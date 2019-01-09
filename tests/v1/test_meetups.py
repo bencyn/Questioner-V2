@@ -23,7 +23,7 @@ class TestUser(BaseTest):
         self.meetup1 = {}
 
     def test_meeetup_create_record(self):
-            url = 'api/v1/meetup/create'
+            url = 'api/v1/meetups/create'
             response= self.client.post(url, data=json.dumps(self.meetup), content_type="application/json")
             result = json.loads(response.data.decode('UTF-8'))
 
@@ -31,6 +31,7 @@ class TestUser(BaseTest):
             self.assertEqual(result["status"], 201)
             self.assertEqual(result["data"], [
                 {
+                    "createdOn":date.datetime
                     "topic": "Python",
                     "location": "Nairobi",
                     "happeningOn": "Thursday",
@@ -39,7 +40,7 @@ class TestUser(BaseTest):
             ])
 
     def test_get_meetup_record(self):
-            url = 'api/v1/meetup/'
+            url = 'api/v1/meetups/upcoming/'
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
 
