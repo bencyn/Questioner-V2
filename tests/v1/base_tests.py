@@ -1,8 +1,6 @@
-'''Global Tests'''
-
 import unittest
 from app import create_app
-from app.v1.models.meetup_model import meetup 
+from app.v1.models.meetup_model import meetups
 
 class BaseTest(unittest.TestCase):
     '''test configurations'''
