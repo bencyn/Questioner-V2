@@ -9,7 +9,7 @@ class Question(object):
     def __init__(self):
         self.questions = questions
 
-    def add_question(self,createdBy,meetup,title,body,votes=0):
+    def add_question(self,meetup,title,body,votes=0):
         """" defines the logic for adding a question """
 
         createdOn = datetime.now()
@@ -17,7 +17,7 @@ class Question(object):
         question = {
             "id": len(self.questions) + 1,
             "createdOn":createdOn,
-            "createdBy":createdBy,
+            "createdBy":len(self.questions)+1,
             "meetup":meetup,
             "title":title,
             "body":body,
