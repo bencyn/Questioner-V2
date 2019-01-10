@@ -14,7 +14,7 @@ def getUsers():
 
 @user.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
-    ''' get a specific meetup'''
+    ''' get a specific user '''
     return jsonify(user_object.get_user(id)),200
 
 @user.route('/', methods = ['POST'])
