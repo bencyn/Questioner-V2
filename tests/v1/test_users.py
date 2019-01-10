@@ -65,9 +65,9 @@ class TestUser(BaseTest):
         self.assertEqual(response.status_code, 200)
 
     def test_get_user_by_id(self):
-        self.get_by_id_url = 'api/v1/users/2'
+        self.get_by_id_url = 'api/v1/users/4'
         self.client.post(self.post_url, data = json.dumps(self.users[0]), content_type="application/json")
-        self.client.post('api/v1/meetups/', data = json.dumps(self.users[1]), content_type="application/json")
+        self.client.post(self.post_url, data = json.dumps(self.users[1]), content_type="application/json")
 
         response = self.client.get(self.get_by_id_url, content_type="application/json")
         self.assertEqual(response.status_code,200)
