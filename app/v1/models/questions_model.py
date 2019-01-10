@@ -7,25 +7,15 @@ class Question(object):
     pass
 
     def __init__(self):
-        self.question = question
+        self.questions = questions
 
-# {
-# “id” : Integer,
-# “createdOn” : Date,
-# “createdBy” : Integer, // represents the user asking the question
-# “meetup” : Integer, // represents the meetup the question is for
-# “title” : String,
-# “body” : String,
-# “votes” : Integer,
-# ...
-# }
-    def add_question(self,createdBy,meetup,title,body,votes):
+    def add_question(self,createdBy,meetup,title,body,votes=0):
         """" defines the logic for adding a question """
 
         createdOn = datetime.now()
 
         question = {
-            "id": len(self.question) + 1,
+            "id": len(self.questions) + 1,
             "createdOn":createdOn,
             "createdBy":createdBy,
             "meetup":meetup,
@@ -33,5 +23,12 @@ class Question(object):
             "body":body,
             "votes":2
         }
-        self.question.apppend(question)
+        self.questions.append(question)
         return question
+
+    
+    # def get_meetups(self):
+    #     return self.meetups
+
+    def get_question(self,id):
+        return self.questions[id]
