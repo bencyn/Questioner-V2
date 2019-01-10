@@ -25,5 +25,8 @@ class Meetup(object):
         self.meetups.append(meetup)
         return meetup
 
-    def get_meetup(self):
+    def get_meetups(self):
         return self.meetups
+
+    def get_meetup(self,id):
+        return self.meetups[id]
