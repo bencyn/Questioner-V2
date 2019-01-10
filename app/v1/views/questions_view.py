@@ -23,11 +23,11 @@ def create_question(meetup_id):
     if not body:
         return validate_input("body")
     else:
-        question_object.add_question(1,meetup_id,title,body)
+        question_object.add_question(meetup_id,title,body)
 
         return jsonify({"status": 201,
                         "data":[{"title": title,
-                                "user_id":len(question_object)+1,
+                                "user_id":len(question_object.questions)+1,
                                 "meetup": meetup_id,
                                 "body": body}]}), 201
 
@@ -35,11 +35,12 @@ def create_question(meetup_id):
 def upvote_question(question_id):
     """ question upvote endpoint logic"""
 
-    question = question_object.get_question(question_id)
+    question = question_object.questions
     if question:
         upvote_question = question[question_id]
         upvote_question['votes'] = upvote_question['votes'] + 1
         return jsonify({"status": 200, "data": upvote_question}), 200
+
     return jsonify({"status": 404, "error": "Question not found"}), 404
 
 
@@ -47,11 +48,14 @@ def upvote_question(question_id):
 def downvote_question(question_id):
     """ question downvote endpoint logic """
    
-    question = question_object.get_question(question_id)
+    question = question_object.questions
+    
     if question:
         downvote_question = question[question_id]
         downvote_question['votes'] = downvote_question['votes'] - 1
         return jsonify({"status": 200, "data": downvote_question}), 200
+
+
     return jsonify({"status": 404, "error": "Question not found"}), 404
 
 
