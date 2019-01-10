@@ -46,20 +46,21 @@ def create_meetup():
             "data":meetup
         })), 201
 
-@meetup.route("/<meetup_id>/rsvps", methods = ['POST'])
+@meetup.route("/<int:meetup_id>/rsvps", methods = ['POST'])
 def reserveMeetup(meetup_id):
     """ meetup reserve logic """
-    data = request.get_json()
+
     try:
-        status = data.get('status')
+        status = request.get_json()['status']
     except KeyError:
         return jsonify({'status': 400,
                         ' error': "rsvps data required"})
     if not status:
         return validate_input("rsvps status")
     else:
+        
         meetups = meetup_object.meetups
-        if meetup:
+        if meetups:
             rsvps_meetup = meetups[meetup_id]
             topic=rsvps_meetup["topic"]
     
