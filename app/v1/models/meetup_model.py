@@ -1,12 +1,12 @@
 from datetime import datetime
 
-meetup = []
+meetups = []
 
 class Meetup(object):
     """ meetups class """
 
     def __init__(self):
-        self.meetups = meetup
+        self.meetups = meetups
 
     def add_meetup(self,location, images, topic,happeningOn, tags):
         """ creates a meetup record"""
@@ -29,4 +29,7 @@ class Meetup(object):
         return self.meetups
 
     def get_meetup(self,id):
-        return self.meetups[id]
+        '''' get meetup record by id '''
+        for meetup in self.meetups:
+            if meetup["id"] == id:
+                return meetup
