@@ -12,6 +12,11 @@ def getUsers():
     ''' fetch all users'''
     return jsonify(user_object.get_users()),200
 
+@user.route("/<int:id>", methods = ['GET'])
+def getMeetup(id):
+    ''' get a specific meetup'''
+    return jsonify(user_object.get_user(id)),200
+
 @user.route('/', methods = ['POST'])
 def register():
     """user signup"""
