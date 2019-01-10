@@ -8,12 +8,19 @@ meetup_object = meetup_model.Meetup()
 @meetup.route("/upcoming/", methods=['GET'])
 def getMeetups():
     ''' fetch all meetup records'''
-    return jsonify(meetup_object.get_meetup()),200
-    
+    return jsonify(meetup_object.get_meetups()),200
+
+
+@meetup.route("/<int:id>", methods = ['GET'])
+def getMeetup(id):
+    ''' get a specific meetup'''
+    return jsonify(meetup_object.get_meetup(id)),200
+    # return jsonify(meetup)
+
 
 @meetup.route('/', methods = ['POST'])
 def create_meetup():
-    '''endpoint to create a meetup'''
+    '''endpoint to create a meetup record'''
     data = request.get_json()
 
     topic = data.get('topic')
