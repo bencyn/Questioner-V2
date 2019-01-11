@@ -23,10 +23,15 @@ This project is managed using a pivotal tracker board. [View the board here](htt
 Features
 -----------------------
 1.users can get all meetups
+
 2.users can get a specific meetups
+
 3.users can post a question to a specific meetup
+
 4.users can downvote a question
+
 5.users can upvote a question
+
 6.users can RSVP meetup
 
 
