@@ -1,6 +1,5 @@
 import unittest
 from app import create_app
-from app.v1.models.meetup_model import meetups
 
 class BaseTest(unittest.TestCase):
     '''test configurations'''
@@ -10,7 +9,3 @@ class BaseTest(unittest.TestCase):
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
 
-    
-    # def tearDown(self):
-    #     '''Removes the dictionaries and the context'''
-    #     del user_accounts[:]
