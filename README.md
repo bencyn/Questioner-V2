@@ -1,5 +1,6 @@
 # Questioner
-
+  Questioner is a platform that allows users to crowdsource questions for a meetup.
+  
 Badges
 ------
 
@@ -8,23 +9,14 @@ Badges
 
 Overview
 --------
-Questioner is a questions crowd-source for meetups.The platform helps meetup organizer priotize questions to be answered.Other users can vote on asked questions.
+The platform helps meetup organizer priotize questions to be answered.Other users can vote on asked questions.
 
 This project is managed using a pivotal tracker board. [View the board here](https://www.pivotaltracker.com/n/projects/2235259)
 
-Github Pages : [link](https://bencyn.github.io/Questioner/UI/)
-
-Documentation :[link](https://documenter.getpostman.com/view/2456985/RznHHciU)
+Github Pages : [link](https://bencyn.github.io/Questioner/UI/) Documentation :[link](https://documenter.getpostman.com/view/2456985/RznHHciU) Heroku Link :[link](https://bencyn-questioner.herokuapp.com/api/v1)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://bencyn-questioner.herokuapp.com/api/v1/)
 
-Heroku Link :[link](https://bencyn-questioner.herokuapp.com/)
-
-<!-- Find the documentation [here](https://documenter.getpostman.com/view/5582682/RznFpxuQ) -->
-
-<!-- [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://questioner-api-version1.herokuapp.com/api/v1/) -->
-
-<!-- [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/71ff9e20905a7f90c3a6) -->
 
 Features
 -----------------------
