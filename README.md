@@ -13,24 +13,22 @@ The platform helps meetup organizer priotize questions to be answered.Other user
 
 This project is managed using a pivotal tracker board. [View the board here](https://www.pivotaltracker.com/n/projects/2235259)
 
-Github Pages : [link](https://bencyn.github.io/Questioner/UI/) Documentation :[link](https://documenter.getpostman.com/view/2456985/RznHHciU) Heroku Link :[link](https://bencyn-questioner.herokuapp.com/api/v1)
+[Github Pages](https://bencyn.github.io/Questioner/UI/) 
+[Documentation](https://documenter.getpostman.com/view/2456985/RznHHciU)
+[Heroku Link](https://bencyn-questioner.herokuapp.com/api/v1)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://bencyn-questioner.herokuapp.com/api/v1/)
 
 
 Features
 -----------------------
-1. Users can create an account and log in.
-2. Users can post questions.
-3. Users can delete the questions they've posted.
-4. Users can post answers.
-5. Users can view the answers to questions.
-6. Uses can accept an answer out of all the answers to his or her question as the preferred answer.
-7. Users can upvote or downvote an answer.
-8. Users can comment on an answer.
-9. Users can fetch all questions he or she has ever asked on the platform.
-10. Users can search for questions on the platform.
-11. Users can view the questions with the most answers.
+1.users can get all meetups
+2.users can get a specific meetups
+3.users can post a question to a specific meetup
+4.users can downvote a question
+5.users can upvote a question
+6.users can RSVP meetup
+
 
 Pre-requisites
 ----------------------
