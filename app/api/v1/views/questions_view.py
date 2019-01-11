@@ -2,7 +2,7 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 
 from ..models.questions_model import Question
-from app.v1 import v1
+from app.api.v1 import v1
 
 question_object=Question()
 

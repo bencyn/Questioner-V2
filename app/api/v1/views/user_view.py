@@ -1,7 +1,7 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 # from ..models import user_model
-from app.v1.models import user_model
+from app.api.v1.models import user_model
 
 user = Blueprint('user', __name__, url_prefix='/api/v1/users')
 user_object = user_model.User()

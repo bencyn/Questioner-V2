@@ -7,7 +7,7 @@ from app import create_app
 
 app = create_app("testing")
 
-class TestUser(BaseTest):
+class TestMeetup(BaseTest):
     def setUp(self):
         """ defining test data"""
         app.config.from_object(instance.config.TestingConfig)
@@ -78,7 +78,6 @@ class TestUser(BaseTest):
         self.assertEqual(response.status_code,201)
         self.assertEqual(result["data"]['status'],'yes')
         # self.assertEqual(response)
-
 
 if __name__ == "__main__":
     unittest.main()
