@@ -1,8 +1,5 @@
 import json ,unittest,instance,datetime
 from .base_tests import BaseTest
-# from ..models import meetup_model
-# from app.v1.views import meetup_view
-# from app.v1.models import meetup_model 
 from app import create_app
 
 app = create_app("testing")

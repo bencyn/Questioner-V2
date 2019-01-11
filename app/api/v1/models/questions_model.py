@@ -26,9 +26,8 @@ class Question(object):
         self.questions.append(question)
         return question
 
-    
-    # def get_meetups(self):
-    #     return self.meetups
-
     def get_question(self,id):
-        return self.questions[id]
+        ''' get question by key id '''
+        for question in questions:
+            if question["id"]==id:
+                return question
