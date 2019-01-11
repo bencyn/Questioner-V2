@@ -87,15 +87,15 @@ When you run this application, you can test the following API endpoints using po
 | Endpoint | Functionality |
 ----------|---------------
 POST/meetups | Create a meetup record
-GET/meetups/&lt;meetup-id&gt; | Fetch a specific meetup record
+GET/meetups/<meetup-id> | Fetch a specific meetup record
 GET /meetups/upcoming/ | Fetch all upcoming meetup records
-POST /meetups/&lt;question-id&lt;questions | Create a question for a specific meetup
-PATCH /questions/&lt;question-id&gt;/upvote | Upvote (increase votes by 1) a specific question
-PATCH /questions/&lt;question-id&gt;/downvote | Downvote (decrease votes by 1) a specific question
-POST /meetups/&lt;meetup-id&gt;/rsvps | Respond to meetup RSVP
+POST /meetups/<meetup-id>/questions | Create a question for a specific meetup
+PATCH /questions/<question-id>/upvote | Upvote (increase votes by 1) a specific question
+PATCH /questions/<question-id>/downvote | Downvote (decrease votes by 1) a specific question
+POST /meetups/<meetup-id>/rsvps | Respond to meetup RSVP
 POST /users | Create a user account
 GET  /users/all | Fetch users
-GET  /users/&lt;user-id&gt | Get a specific user account
+GET  /users/<user-id> | Get a specific user account
 
 
 Authors
