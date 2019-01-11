@@ -77,6 +77,7 @@ class TestUser(BaseTest):
         result = json.loads(response.data.decode('UTF-8'))
         self.assertEqual(response.status_code,201)
         self.assertEqual(result["data"]['status'],'yes')
+        # self.assertEqual(response)
 
 
 if __name__ == "__main__":
