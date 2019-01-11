@@ -9,3 +9,5 @@ Badges
 
 [![Build Status](https://travis-ci.org/bencyn/Questioner.svg?branch=develop)](https://travis-ci.org/bencyn/Questioner) [![Coverage Status](https://coveralls.io/repos/github/bencyn/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/bencyn/Questioner?branch=develop) [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/bencyn/Questioner)
 
+[![Coverage Status](https://coveralls.io/repos/github/bencyn/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/bencyn/Questioner?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/bencyn/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/bencyn/Questioner?branch=develop)
