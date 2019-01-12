@@ -2,6 +2,8 @@ from datetime import datetime
 
 users = []
 
+logged_in_users = []
+
 class User(object):
     """ user class """
 
@@ -27,6 +29,18 @@ class User(object):
 
         return user
 
+    def login_user(self,username,password):
+        """ login a user after validation """
+
+        token = ''
+
+        user = {
+            "username":username,
+            "password":password,
+            "token":token
+
+        }
+
     def get_users(self):
         return self.users
 
@@ -34,3 +48,6 @@ class User(object):
         for user in users:
             if user["id"] == id:
                 return user
+
+    def authenticate_user(self):
+        pass
