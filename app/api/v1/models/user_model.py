@@ -43,9 +43,11 @@ class User(object):
         return user
 
     def get_users(self):
+        """ get all registered users """
         return self.users
 
     def get_user(self,id):
+        """ get user by id """
         for user in users:
             if user["id"] == id:
                 return user
