@@ -1,10 +1,16 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
-# from ..models import user_model
+# from flask_jwt_extended import (
+#     JWTManager,jwt_manager, create_access_token,get_jwt_identity
+# )
+# get user model
 from app.api.v1.models import user_model
+from ..utils.validators import Validators
+import app
 
 user = Blueprint('user', __name__, url_prefix='/api/v1/users')
 user_object = user_model.User()
+validator = Validators()
 
 
 @user.route("/all", methods=['GET'])
@@ -35,22 +41,46 @@ def register():
     isAdmin = request.get_json()['isAdmin']
 
     if not username:
-        return validate_input("username")
+        return validator.validate_input("username")
     if not email:
-        return validate_input("email")
+        return validator.validate_input("email")
     if not password:
-        return validate_input("password")
+        return validator.validate_input("password")
     else:
         # add create user
         user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
+        
         return jsonify({
             "status": 201,
             "data":user
         }), 201
 
-def validate_input(field):
-     return make_response(jsonify({
-            "status": 400,
-            "message": "{} cannot be empty".format(field)
-        })), 400
+@user.route('/login', methods = ['POST'])
+def login():
+    if not request.data:
+        return validator.validate_missing_data()
+
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    
+    if not username:
+        return validator.validate_input("username")
+    if not password:
+        return validator.validate_input("password")
+    else:
+        # check  if user exists return 401 unauthorized error
+        users = user_object.users
+        if any(y['username'] == username for y in users) and any(y['password'] == password for y in users):
+                # generate token
+            access_token = app.create_access_token(identity=username)
+            user_loggedIn = user_object.login_user(username,password,access_token)
+            
+            return jsonify({
+                "status": 201,
+                "message":"user logged in successfully",
+                "data":user_loggedIn
+            }), 201
+        else:
+            return jsonify({'msg': 'incorrect username/password combination' }), 401
+
 
