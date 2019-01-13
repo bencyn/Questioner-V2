@@ -16,4 +16,4 @@ class Validators():
     def validate_missing_data(self):
         """ validates missing json object"""
         return jsonify({'status': 400,
-                        ' error': "Bad request: attach missing fields"})
+                        ' error': "Bad request: attach missing fields"}),400
