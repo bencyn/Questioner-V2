@@ -1,9 +1,5 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
-# from flask_jwt_extended import (
-#     JWTManager,jwt_manager, create_access_token,get_jwt_identity
-# )
-# get user model
 from app.api.v1.models import user_model
 from ..utils.validators import Validators
 import app
