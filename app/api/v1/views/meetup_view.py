@@ -12,7 +12,7 @@ def getMeetups():
 
 @meetup.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
-    ''' get a specific meetup'''
+    ''' this function gets a  specific meetup by id'''
     return jsonify(meetup_object.get_meetup(id)),200
 
 @meetup.route('/', methods = ['POST'])
@@ -38,13 +38,16 @@ def create_meetup():
                     "status": 400,
                     "error": "{} cannot be empty".format(key)
                 })), 400
-
-        meetup = meetup_object.add_meetup(location,images,topic,happeningOn,tags)
+                
+        # pass user input
+        user_input = {"topic":topic,"location":location,"images":images,"happeningOn":happeningOn,"tags":tags}
+        meetup = meetup_object.add_meetup(user_input)
         return jsonify({"status": 201,"data":meetup}), 201
 
 @meetup.route("/<int:meetup_id>/rsvps", methods = ['POST'])
 def reserveMeetup(meetup_id):
-    """ meetup reserve logic """
+    """ this endpoint allows a user to submit a meetup reserve response """
+
     data = request.get_json()
     try:
         status = data.get('status')
@@ -59,7 +62,7 @@ def reserveMeetup(meetup_id):
         if meetup:
             rsvps_meetup = meetups[meetup_id]
             topic=rsvps_meetup["topic"]
-    
+
             return make_response(jsonify({
                 "status":201,
                 "data":{
@@ -71,7 +74,9 @@ def reserveMeetup(meetup_id):
         return jsonify({"status": 404, "error": "Meetup not found"}), 404
   
 def validate_input(field):
-     return make_response(jsonify({
-            "status": 400,
-            "message": "{} cannot be empty".format(field)
-        })), 400
+    """ returns an empty error message"""
+
+    return make_response(jsonify({
+        "status": 400,
+        "message": "{} cannot be empty".format(field)
+    })), 400
