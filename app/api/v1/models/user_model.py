@@ -7,6 +7,7 @@ class User(object):
     """ user class """
 
     def __init__(self):
+        """initialize and define objects """
         self.users = users
         self.logged_in_user = logged_in_users
 
