@@ -60,7 +60,8 @@ def register():
 
 @user.route('/login', methods = ['POST'])
 def login():
-    """ this endpoint allows a user to login then granted an access token """
+    """ this endpoint allows a user to login and auto-generate an auth token """
+
     if not request.data:
         return validator.validate_missing_data()
 
@@ -76,18 +77,16 @@ def login():
                 "error": "{} cannot be empty".format(key)
             })), 400
 
-    
     users = user_object.users
+    
     if any(y['username'] == username for y in users) and any(y['password'] == password for y in users):
-        # generate token and login users
         access_token = app.create_access_token(identity=username)
         user_loggedIn = user_object.login_user(username,password,access_token)
         
-        return jsonify({
-            "status": 201,
-            "message":"user logged in successfully",
-            "data":user_loggedIn
-        }), 201
+        return jsonify({ "status": 201,
+                "message":"user logged in successfully",
+                "data":user_loggedIn
+            }), 201
     else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401
 
