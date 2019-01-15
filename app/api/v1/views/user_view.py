@@ -2,7 +2,7 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from app.api.v1.models import user_model
 from ..utils.validators import Validators
-import app
+import app,re
 
 user = Blueprint('user', __name__, url_prefix='/api/v1/users')
 user_object = user_model.User()
@@ -11,17 +11,17 @@ validator = Validators()
 
 @user.route("/all", methods=['GET'])
 def getUsers():
-    ''' fetch all users'''
+    ''' this endpoints allows a user fetch all registered users'''
     return jsonify(user_object.get_users()),200
 
 @user.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
-    ''' get a specific meetup'''
+    ''' this endpoints allows a user get a specific meetup'''
     return jsonify(user_object.get_user(id)),200
 
 @user.route('/', methods = ['POST'])
 def register():
-    """user signup"""
+    """ this endpoint allows unregistered users to signup """
     data = request.get_json()
 
     if not data:
@@ -36,23 +36,28 @@ def register():
     username = request.get_json()['username']
     isAdmin = request.get_json()['isAdmin']
 
-    if not username:
-        return validator.validate_input("username")
-    if not email:
-        return validator.validate_input("email")
-    if not password:
-        return validator.validate_input("password")
-    else:
-        # add create user
-        user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
+    val_input = {"username":username,"email":email,"password":password}
+
+    for key,value in val_input.items():
+        if not value.strip():
+            return validator.validate_input(key)
         
-        return jsonify({
-            "status": 201,
-            "data":user
-        }), 201
+        if not re.match(r'^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                            email):
+             return jsonify({'status': 400,
+                        'error': "Bad request: the email provided is invalid"}),400
+
+    user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
+    
+    return jsonify({
+        "status": 201,
+        "data":user
+    }), 201
+
 
 @user.route('/login', methods = ['POST'])
 def login():
+    """ this endpoint allows a user to login after generate an access token """
     if not request.data:
         return validator.validate_missing_data()
 
