@@ -30,7 +30,7 @@ class TestMeetup(BaseTest):
                 "location":"nyahururu",
                 "topic":"Ethical Hacking Hackathon",
                 "happeningOn":"Monday 12 2018",
-                "tags": ["Pentests", "Bruteforce"],
+                "tags": "",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
             }]
