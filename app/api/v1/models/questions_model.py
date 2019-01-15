@@ -7,6 +7,7 @@ class Question(object):
     pass
 
     def __init__(self):
+        """initialize and define objects"""
         self.questions = questions
 
     def add_question(self,meetup,title,body,votes=0):

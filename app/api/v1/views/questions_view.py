@@ -38,7 +38,7 @@ def create_question(meetup_id):
 
 @v1.route("/questions/<int:question_id>/upvote", methods=['PATCH'])
 def upvote_question(question_id):
-    """ question upvote endpoint logic"""
+    """ question upvote endpoint logic """
 
     question = question_object.get_question(question_id)
     

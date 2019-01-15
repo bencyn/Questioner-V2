@@ -6,10 +6,12 @@ class Validators():
     """ global validation methods """
 
     def __init__(self):
+        """define objects"""
         pass
 
     def validation_message(self,field):
         """ this method generates an empty error message for empty fields"""
+        
         return make_response(jsonify({
                 "status": 400,
                 "error": "{} cannot be empty".format(field)
