@@ -6,6 +6,7 @@ class Meetup(object):
     """ meetups class """
 
     def __init__(self):
+        """ initialize and define meetup objects"""
         self.meetups = meetups
 
     def add_meetup(self,location, images, topic,happeningOn, tags):
@@ -26,6 +27,7 @@ class Meetup(object):
         return meetup
 
     def get_meetups(self):
+        """ return all meetup records """
         return self.meetups
 
     def get_meetup(self,id):
