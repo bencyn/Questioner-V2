@@ -68,6 +68,7 @@ class TestUser(BaseTest):
     def test_get_all_users(self):
         response = self.client.get(self.get_url,content_type = "application/json")
         self.assertEqual(response.status_code, 200)
+        
 
     def test_get_user_by_id(self):
         self.get_by_id_url = 'api/v1/users/2'
@@ -76,7 +77,9 @@ class TestUser(BaseTest):
 
         response = self.client.get(self.get_by_id_url, content_type="application/json")
         self.assertEqual(response.status_code,200)
-    
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["username"],self.users[1]["username"])
+
     def test_if_user_can_login(self):
         """ tests if user can login successfully with correct credentials """
 
@@ -123,6 +126,7 @@ class TestUser(BaseTest):
     
     def _post_login_request(self,input=""):
         """ sends a post login request with the input passed as data """
+        
         if input:
             self.data = json.dumps(input)
             response = self.client.post(self.login_url, data = self.data, content_type="application/json")
@@ -133,6 +137,7 @@ class TestUser(BaseTest):
    
     def _post_register_request(self,input=""):
         """ send a post regiter request with the input passed as data"""
+        
         if input is True:
             response = self.client.post(self.register_url, data = self.data, content_type="application/json")
         else:
