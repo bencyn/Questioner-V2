@@ -9,22 +9,32 @@ question_object=questions_model.Question()
 @v1.route("/meetups/<int:meetup_id>/questions", methods=['POST'])
 def create_question(meetup_id):
     """ post method that creates a question posted in a specific meeting """
-   
-    try:
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"Message": 'Cannot send empty data'}),409
+    else:
         title = request.get_json()['title']
         body = request.get_json()['body']
+        
+        
+        val_input = {"title":title,"body":body}
 
-    except KeyError:
-        return jsonify({'status': 400,
-                        ' error': "question data required"})
+        for key,value in val_input.items():
+            if not value.strip():
+                return make_response(jsonify({
+                    "status": 400,
+                    "error": "{} cannot be empty".format(key)
+                })), 400
 
-    question_object.add_question(meetup_id,title,body)
+        question_object.add_question(meetup_id,title,body)
 
-    return jsonify({"status": 201,
-                    "data":[{"title": title,
-                            "user_id":len(question_object.questions)+1,
-                            "meetup": meetup_id,
-                            "body": body}]}), 201
+        return jsonify({"status": 201,
+                        "data":[{"title": title,
+                                "user_id":len(question_object.questions)+1,
+                                "meetup": meetup_id,
+                                "body": body}]}), 201
 
 @v1.route("/questions/<int:question_id>/upvote", methods=['PATCH'])
 def upvote_question(question_id):
