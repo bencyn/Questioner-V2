@@ -9,18 +9,18 @@ class Meetup(object):
         """ initialize and define meetup objects"""
         self.meetups = meetups
 
-    def add_meetup(self,location, images, topic,happeningOn, tags):
+    def add_meetup(self,args):
         """ creates a meetup record"""
         createdOn = datetime.now()
         
         meetup = {
             "id": len(self.meetups) + 1,
-            "topic": topic,
-            "location": location,
+            "topic": args["topic"],
+            "location": args["location"],
             "createdOn": createdOn,
-            "images": images,
-            "happeningOn": happeningOn,
-            "tags": tags,
+            "images": args["images"],
+            "happeningOn": args["happeningOn"],
+            "tags": args['tags'],
         }   
 
         self.meetups.append(meetup)
