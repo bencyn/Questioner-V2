@@ -15,7 +15,7 @@ class TestMeetup(BaseTest):
             "location": "Nairobi",
             "images": ["image3.png", "image4.png"],
             "happeningOn": "Monday 12 2018",
-            "tags": ["Pentests", "Bruteforce"]
+            "tags":"Pentests,Bruteforce"
         }
         self.meetups = [
             {
