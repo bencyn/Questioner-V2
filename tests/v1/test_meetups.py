@@ -15,7 +15,7 @@ class TestMeetup(BaseTest):
             "location": "Nairobi",
             "images": ["image3.png", "image4.png"],
             "happeningOn": "Monday 12 2018",
-            "tags": ["Pentests", "Bruteforce"]
+            "tags":"Pentests,Bruteforce"
         }
         self.meetups = [
             {
@@ -30,7 +30,7 @@ class TestMeetup(BaseTest):
                 "location":"nyahururu",
                 "topic":"Ethical Hacking Hackathon",
                 "happeningOn":"Monday 12 2018",
-                "tags": ["Pentests", "Bruteforce"],
+                "tags": "pentests,codebase",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
             }]
@@ -68,6 +68,7 @@ class TestMeetup(BaseTest):
 
         # post two meetup records
         self.client.post('api/v1/meetups/', data = json.dumps(self.meetups[0]), content_type="application/json")
+        self.client.post('api/v1/meetups/', data = json.dumps(self.meetups[1]), content_type="application/json")
         self.client.post('api/v1/meetups/', data = json.dumps(self.meetups[1]), content_type="application/json")
         
         response = self.client.post(rsvp_url,data=json.dumps(self.rsvp) ,content_type="application/json")

@@ -10,73 +10,39 @@ def getMeetups():
     ''' fetch all meetup records'''
     return jsonify(meetup_object.get_meetups()),200
 
-
 @meetup.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
     ''' get a specific meetup'''
     return jsonify(meetup_object.get_meetup(id)),200
-    # return jsonify(meetup)
-
 
 @meetup.route('/', methods = ['POST'])
 def create_meetup():
-    '''endpoint to create a meetup record'''
+    '''this endpoints allows users to create a meetup record '''
+
     data = request.get_json()
 
-    topic = data.get('topic')
-    location = data.get('location')
-    images = data.get('images')
-    happeningOn = data.get('happeningOn')
-    tags = data.get('tags')
-    
-    if not topic:
-        return validate_input("topic")
-    if not location:
-        return validate_input("location")
-    if not happeningOn:
-        return validate_input("happeningOn")
-    if not tags:
-        return validate_input("tags")
-    if not images:
-        return validate_input("images")
+    if not data:
+        return jsonify({"Message": 'Cannot send empty data'}),409
     else:
+        topic = data.get('topic')
+        location = data.get('location')
+        images = data.get('images')
+        happeningOn = data.get('happeningOn')
+        tags = data.get('tags')
+        
+        val_input = {"topic":topic,"location":location,"happeningOn":happeningOn,"tags":tags}
+
+        for key,value in val_input.items():
+            if  not value.strip() :
+                return make_response(jsonify({
+                    "status": 400,
+                    "error": "{} cannot be empty".format(key)
+                })), 400
+
         meetup = meetup_object.add_meetup(location,images,topic,happeningOn,tags)
-        return jsonify({
-            "status": 201,
-            "data":meetup
-        }), 201
+        return jsonify({"status": 201,"data":meetup}), 201
 
 @meetup.route("/<int:meetup_id>/rsvps", methods = ['POST'])
-def rsvpMeetup(meetup_id):
-    """ meetup reserve method """
-
-    try:
-        status = request.get_json()['status']
-    except KeyError:
-        return jsonify({'status': 400,
-                        ' error': "rsvps data required"})
-    if not status:
-        return validate_input("rsvps status")
-
-    else:
-        meetups = meetup_object.meetups
-        if meetups:
-            rsvps_meetup = meetups[meetup_id]
-            topic=rsvps_meetup["topic"]
-    
-            return make_response(jsonify({
-                "status":201,
-                "data":{
-                    "topic":topic,
-                    "status":status,
-                }
-            })), 201
-
-        return jsonify({"status": 404, "error": "Meetup not found"}), 404
-  
-  
-
-@meetup.route("/<meetup_id>/rsvps", methods = ['POST'])
 def reserveMeetup(meetup_id):
     """ meetup reserve logic """
     data = request.get_json()
@@ -85,7 +51,8 @@ def reserveMeetup(meetup_id):
     except KeyError:
         return jsonify({'status': 400,
                         ' error': "rsvps data required"})
-    if not status:
+
+    if not status.strip():
         return validate_input("rsvps status")
     else:
         meetups = meetup_object.meetups
@@ -103,8 +70,6 @@ def reserveMeetup(meetup_id):
 
         return jsonify({"status": 404, "error": "Meetup not found"}), 404
   
-  
-
 def validate_input(field):
      return make_response(jsonify({
             "status": 400,
