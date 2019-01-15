@@ -41,9 +41,9 @@ class TestMeetup(BaseTest):
     def test_user_can_create_meeetup_record(self):
         with self.client:
             ''' test user can create a meetup record'''
-            # url = api/v1/meetups/
+
             response= self.client.post('api/v1/meetups/', data = json.dumps(self.meetups[0]), content_type="application/json")
-          
+
             self.assertEqual(response.status_code, 201)
    
     def test_user_can_get_meetup_records(self):
@@ -59,7 +59,9 @@ class TestMeetup(BaseTest):
         self.client.post('api/v1/meetups/', data = json.dumps(self.meetups[1]), content_type="application/json")
 
         response = self.client.get(self.get_url, content_type="application/json")
+        result = json.loads(response.data.decode('UTF-8'))
         self.assertEqual(response.status_code,200)
+        self.assertEqual(result["topic"],"Ethical Hacking Hackathon")
 
     def test_rsvp_meetup(self):
         ''' tests whether user can respond to a meeting invitation '''
@@ -75,7 +77,6 @@ class TestMeetup(BaseTest):
         result = json.loads(response.data.decode('UTF-8'))
         self.assertEqual(response.status_code,201)
         self.assertEqual(result["data"]['status'],'yes')
-        # self.assertEqual(response)
 
 if __name__ == "__main__":
     unittest.main()
