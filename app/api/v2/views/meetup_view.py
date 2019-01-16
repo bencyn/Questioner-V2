@@ -2,7 +2,7 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from ..models import meetup_model
 
-meetup = Blueprint('meetup', __name__, url_prefix='/api/v1/meetups')
+meetup = Blueprint('meetup', __name__, url_prefix='/api/v2/meetups')
 meetup_object = meetup_model.Meetup()
 
 @meetup.route("/upcoming/", methods=['GET'])
