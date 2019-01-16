@@ -4,21 +4,21 @@ from app.api.v2.models import user_model
 from ..utils.validators import Validators
 import app,re
 
-user = Blueprint('user', __name__, url_prefix='/api/v2/users')
+user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/users')
 user_object = user_model.User()
 validator = Validators()
 
-@user.route("/all", methods=['GET'])
+@user_v2.route("/all", methods=['GET'])
 def getUsers():
     ''' this endpoints allows a user fetch all registered users'''
     return jsonify(user_object.get_users()),200
 
-@user.route("/<int:id>", methods = ['GET'])
+@user_v2.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
     ''' this endpoints allows a user get a specific meetup'''
     return jsonify(user_object.get_user(id)),200
 
-@user.route('/', methods = ['POST'])
+@user_v2.route('/', methods = ['POST'])
 def register():
     """ this endpoint allows unregistered users to signup """
     data = request.get_json()
@@ -58,7 +58,7 @@ def register():
     }), 201
 
 
-@user.route('/login', methods = ['POST'])
+@user_v2.route('/login', methods = ['POST'])
 def login():
     """ this endpoint allows a user to login and auto-generate an auth token """
 
