@@ -32,9 +32,9 @@ class TestUser(BaseTest):
                 "isAdmin" :"0",
             }
         ]
-        self.register_url = 'api/v1/users/'
-        self.get_url = 'api/v1/users/all'
-        self.login_url = 'api/v1/users/login'
+        self.register_url = 'api/v2/users/'
+        self.get_url = 'api/v2/users/all'
+        self.login_url = 'api/v2/users/login'
 
     def test_if_user_can_create_account(self):
         with self.client:
@@ -71,7 +71,7 @@ class TestUser(BaseTest):
         
 
     def test_get_user_by_id(self):
-        self.get_by_id_url = 'api/v1/users/2'
+        self.get_by_id_url = 'api/v2/users/2'
         self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
         self.client.post(self.register_url, data = json.dumps(self.users[1]), content_type="application/json")
 
