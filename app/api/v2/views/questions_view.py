@@ -2,11 +2,11 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 
 from ..models import questions_model
-from app.api.v1 import v1
+from ....api.v2 import v2
 
 question_object=questions_model.Question()
 
-@v1.route("/meetups/<int:meetup_id>/questions", methods=['POST'])
+@v2.route("/meetups/<int:meetup_id>/questions", methods=['POST'])
 def create_question(meetup_id):
     """ post method that creates a question posted in a specific meeting """
 
@@ -36,7 +36,7 @@ def create_question(meetup_id):
                                 "meetup": meetup_id,
                                 "body": body}]}), 201
 
-@v1.route("/questions/<int:question_id>/upvote", methods=['PATCH'])
+@v2.route("/questions/<int:question_id>/upvote", methods=['PATCH'])
 def upvote_question(question_id):
     """ question upvote endpoint logic """
 
@@ -50,7 +50,7 @@ def upvote_question(question_id):
     return jsonify({"status": 404, "error": "Question not found"}), 404
 
 
-@v1.route("/questions/<int:question_id>/downvote", methods=['PATCH'])
+@v2.route("/questions/<int:question_id>/downvote", methods=['PATCH'])
 def downvote_question(question_id):
     """ question downvote endpoint logic """
    
