@@ -15,14 +15,17 @@ def connect_db(url):
 def db_init():
     """ setup database connection """
     url = current_app.config['DATABASE_URL']
-    conn = psycopg2.connect(url)
+    conn = connect_db(url)
     return conn
 
 def test_db_init():
     """" setup database in test environment """
 
-    url = current_app.config['DATABASE_URL']
+    url = current_app.config['TEST_DATABASE_URL']
     conn = connect_db(url)
+    create_tables(conn)
+
+def create_tables(conn):
     curr = conn.cursor()
     tables = migrations.tables()
 
