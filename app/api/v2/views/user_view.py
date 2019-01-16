@@ -1,10 +1,10 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
-from app.api.v1.models import user_model
+from app.api.v2.models import user_model
 from ..utils.validators import Validators
 import app,re
 
-user = Blueprint('user', __name__, url_prefix='/api/v1/users')
+user = Blueprint('user', __name__, url_prefix='/api/v2/users')
 user_object = user_model.User()
 validator = Validators()
 
