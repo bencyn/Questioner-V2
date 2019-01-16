@@ -4,6 +4,8 @@ from flask_jwt_extended import (
     get_jwt_identity
 )
 from instance.config import app_config
+from .api.v1 import views as v1_views
+from .api.v2 import views as v2_views
 from .api.v1.views.meetup_view import meetup
 from .api.v1.views.questions_view import v1 as questions
 from .api.v1.views.user_view import user
