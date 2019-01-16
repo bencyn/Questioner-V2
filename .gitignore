@@ -8,4 +8,5 @@ __init__.pyc
 __init__.pytest_cache
 __pycache__
 **.pyc**
-
+.env
+test_database_con.py
