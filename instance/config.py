@@ -8,7 +8,7 @@ class Config(object):
     ENV = 'development'
     SECRET = os.getenv('SECRET')
     DATABASE_URL =os.getenv('DATABASE_URL')
-    DATABASE_URL =os.getenv('DATABASE_TEST_URL')
+    TEST_DATABASE_URL =os.getenv('DATABASE_TEST_URL')
 
 
 class DevelopmentConfig(Config):
