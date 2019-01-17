@@ -1,10 +1,13 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
+import app,re
 from app.api.v2.models import user_model
 from ..utils.validators import Validators
-import app,re
+
 
 user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/users')
+auth_v2 = Blueprint('auth_v2',__name__, url_prefix='/api/v2/auth')
+
 user_object = user_model.User()
 validator = Validators()
 
@@ -90,4 +93,11 @@ def login():
     else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401
 
+
+@auth_v2.route('/token', methods=['GET'])
+@app.jwt_required
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = app.get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
