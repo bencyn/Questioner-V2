@@ -1,12 +1,13 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
-
+import app
 from ..models import questions_model
 from ....api.v2 import v2
 
 question_object=questions_model.Question()
 
 @v2.route("/meetups/<int:meetup_id>/questions", methods=['POST'])
+@app.jwt_required
 def create_question(meetup_id):
     """ post method that creates a question posted in a specific meeting """
 
@@ -37,6 +38,7 @@ def create_question(meetup_id):
                                 "body": body}]}), 201
 
 @v2.route("/questions/<int:question_id>/upvote", methods=['PATCH'])
+@app.jwt_required
 def upvote_question(question_id):
     """ question upvote endpoint logic """
 
@@ -51,6 +53,7 @@ def upvote_question(question_id):
 
 
 @v2.route("/questions/<int:question_id>/downvote", methods=['PATCH'])
+@app.jwt_required
 def downvote_question(question_id):
     """ question downvote endpoint logic """
    
