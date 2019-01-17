@@ -5,38 +5,6 @@ from app import create_app
 app = create_app("testing")
 
 class TestMeetup(BaseTest):
-    def setUp(self):
-        """ defining test data"""
-        app.config.from_object(instance.config.TestingConfig)
-        self.client = app.test_client()
-
-        self.meetup = {
-            "topic": "Ethical Hacking Hackathon",
-            "location": "Nairobi",
-            "images": ["image3.png", "image4.png"],
-            "happeningOn": "Monday 12 2018",
-            "tags":"Pentests,Bruteforce"
-        }
-        self.meetups = [
-            {
-                "location":"nairobi",
-                "topic":"Hackathon For The Brave",
-                "happeningOn":"2019-20-23",
-                "tags":"UI,UX",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456471610.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            },
-            {
-                "location":"nyahururu",
-                "topic":"Ethical Hacking Hackathon",
-                "happeningOn":"Monday 12 2018",
-                "tags": "pentests,codebase",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            }]
-        self.rsvp={"status":"yes"}
-        self.get_url = 'api/v2/meetups/2'
-        self.post_url ='api/v2/meetups/'
 
     def test_user_can_create_meeetup_record(self):
         with self.client:
