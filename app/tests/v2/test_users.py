@@ -1,40 +1,10 @@
 import json ,unittest,instance,datetime
 from .base_tests import BaseTest
 from app import create_app
-
-app = create_app("testing")
+from app.database.connect import (test_db_init,drop_tables)
 
 class TestUser(BaseTest):
-    def setUp(self):
-        """ defining test data"""
-        app.config.from_object(instance.config.TestingConfig)
-        self.client = app.test_client()
-
-        self.users =[
-            {
-                "firstname" :"benson",
-                "lastname": "kamaa",
-                "othername" :"wamolito",
-                "email" :"bensonnjung39@gmail.com",
-                "password":"ben742285",
-                "phoneNUmber":"0790561841",
-                "username" :"bencyn",
-                "isAdmin" :"0",
-            },
-            {
-                "firstname" :"benson",
-                "lastname": "kamaa",
-                "othername" :"wamolito",
-                "email" :"bensonnjung39@gmail.com",
-                "password":"ben74285",
-                "phoneNUmber":"0790561841",
-                "username" :"njeru",
-                "isAdmin" :"0",
-            }
-        ]
-        self.register_url = 'api/v2/users/'
-        self.get_url = 'api/v2/users/all'
-        self.login_url = 'api/v2/users/login'
+        # self.db = self.test_db
 
     def test_if_user_can_create_account(self):
         with self.client:
