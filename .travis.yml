@@ -1,5 +1,7 @@
-
 language: python
+
+services: 
+  - postgresql
 python:
     - "3.6"
 
@@ -7,9 +9,17 @@ python:
 install:
     - pip install -r requirements.txt
 
+before_script: 
+
+  - psql -c "CREATE DATABASE test_questioner;" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
+ 
 # Run tests
 script:
      - pytest 
 
 after_success:
     - coveralls
+
+
+    

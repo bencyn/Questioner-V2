@@ -1,6 +1,6 @@
 from datetime import datetime
 
-questions=[]
+# questions=[]
 
 class Question(object):
     """ questions class """
@@ -8,7 +8,7 @@ class Question(object):
 
     def __init__(self):
         """initialize and define objects"""
-        self.questions = questions
+        # self.questions = questions
 
     def add_question(self,meetup,title,body,votes=0):
         """" defines the logic for adding a question """
@@ -16,19 +16,19 @@ class Question(object):
         createdOn = datetime.now()
 
         question = {
-            "id": len(self.questions) + 1,
             "createdOn":createdOn,
-            "createdBy":len(self.questions)+1,
+            # "createdBy":len(self.questions)+1,
             "meetup":meetup,
             "title":title,
             "body":body,
             "votes":2
         }
-        self.questions.append(question)
+        # self.questions.append(question)
         return question
 
     def get_question(self,id):
         ''' get question by key id '''
-        for question in questions:
-            if question["id"]==id:
-                return question
+        pass
+        # for question in questions:
+        #     if question["id"]==id:
+        #         return question

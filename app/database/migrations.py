@@ -1,5 +1,3 @@
-
-
 def tables():
     """ defines database table structures"""
 
@@ -9,14 +7,14 @@ def tables():
         lastname  character varying(50) NOT NULL,
         othername character varying(50) NOT NULL,
         email  character varying(50) UNIQUE,
-        phoneNumber numeric NOT NULL
+        phoneNumber numeric NOT NULL,
         username character varying(50) NOT NULL,
         password character varying(200) NOT NULL,
         isAdmin boolean,
         registered timestamp default current_timestamp
     );"""
 
-    meetups = """"CREATE TABLE IF NOT EXIST meetups(
+    meetups = """CREATE TABLE IF NOT EXISTS meetups(
         id serial PRIMARY KEY NOT NULL,
         happenningOn date NOT NULL,
         location character varying(50) NULL,
@@ -50,3 +48,14 @@ def tables():
 
     return tables
 
+def tables_to_drop():
+    """ define drop tables """
+
+    users = """ DROP TABLE IF EXISTS users CASCADE """
+    meetups = """ DROP TABLE IF EXISTS meetups CASCADE """
+    questions = """ DROP TABLE IF EXISTS questions CASCADE """
+    rsvps = """ DROP TABLE IF EXISTS rsvps CASCADE """
+
+    tables =[users,meetups,questions,rsvps]
+
+    return tables
