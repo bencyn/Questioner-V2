@@ -1,21 +1,25 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from ..models import meetup_model
+import app
 
 meetup_v2 = Blueprint('meetup_v2', __name__, url_prefix='/api/v2/meetups')
 meetup_object = meetup_model.Meetup()
 
 @meetup_v2.route("/upcoming/", methods=['GET'])
+@app.jwt_required
 def getMeetups():
     ''' fetch all meetup records'''
     return jsonify(meetup_object.get_meetups()),200
 
 @meetup_v2.route("/<int:id>", methods = ['GET'])
+@app.jwt_required
 def getMeetup(id):
     ''' this function gets a  specific meetup by id'''
     return jsonify(meetup_object.get_meetup(id)),200
 
 @meetup_v2.route('/', methods = ['POST'])
+@app.jwt_required
 def create_meetup():
     '''this endpoints allows users to create a meetup record '''
 
@@ -45,6 +49,7 @@ def create_meetup():
         return jsonify({"status": 201,"data":meetup}), 201
 
 @meetup_v2.route("/<int:meetup_id>/rsvps", methods = ['POST'])
+@app.jwt_required
 def reserveMeetup(meetup_id):
     """ this endpoint allows a user to submit a meetup reserve response """
 
