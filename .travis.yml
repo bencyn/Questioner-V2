@@ -13,8 +13,7 @@ before_script:
 
   - psql -c "CREATE DATABASE test_questioner;" -U postgres
   - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
-  - export TEST_DATABASE_URL="dbname='test_questioner' host='localhost' port='5432' user='postgres' password='ben742285'"
-
+ 
 # Run tests
 script:
      - pytest 
