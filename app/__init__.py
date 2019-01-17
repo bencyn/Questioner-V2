@@ -26,6 +26,6 @@ def create_app(config):
 
     # app.config.from_object(confi)
     app.config['JWT_SECRET_KEY'] = "@2ekj@#02ks-"
-    # jwt= JWTManager(app)
+    jwt= JWTManager(app)
     
     return app
