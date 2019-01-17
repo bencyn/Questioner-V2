@@ -5,15 +5,18 @@ from ..utils.validators import Validators
 import app,re
 
 user = Blueprint('user', __name__, url_prefix='/api/v1/users')
+auth = Blueprint('auth',__name__, url_prefix='/api/v1/auth')
 user_object = user_model.User()
 validator = Validators()
 
 @user.route("/all", methods=['GET'])
+@app.jwt_required
 def getUsers():
     ''' this endpoints allows a user fetch all registered users'''
     return jsonify(user_object.get_users()),200
 
 @user.route("/<int:id>", methods = ['GET'])
+@app.jwt_required
 def getMeetup(id):
     ''' this endpoints allows a user get a specific meetup'''
     return jsonify(user_object.get_user(id)),200
@@ -89,5 +92,12 @@ def login():
             }), 201
     else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401
+
+@auth.route('/token', methods=['GET'])
+@app.jwt_required
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = app.get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 
