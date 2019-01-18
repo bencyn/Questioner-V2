@@ -4,9 +4,6 @@ from app.database import migrations
 
 def connect_db(url):
     """ initiate a database connection"""
-
-    # url = current_app.config.get('DATABASE_URL')
-    # current_app.config.get()
     try:
         conn = psycopg2.connect(url)
         return conn
@@ -14,9 +11,10 @@ def connect_db(url):
         return {'message': '{}'.format(e)}
 
 def db_init():
-    """ setup database connection """
-    url = current_app.config.get['DATABASE_URL']
+    """ setup database """
+    url = current_app.config['DATABASE_URL']
     conn = connect_db(url)
+    create_tables(conn)
     return conn
 
 def test_db_init():
@@ -28,6 +26,7 @@ def test_db_init():
     return conn
 
 def create_tables(conn):
+    """create tables in the database"""
     curr = conn.cursor()
     tables = migrations.tables()
 
@@ -37,6 +36,7 @@ def create_tables(conn):
     
 
 def drop_tables():
+    """destroy test database """
     test_url = os.getenv('TEST_DATABASE_URL')
     conn = connect_db(test_url)
     curr = conn.cursor()
