@@ -15,7 +15,7 @@ class BaseTest(unittest.TestCase):
         with self.app.app_context():
             self.test_db = test_db_init()
         """ defining test data"""
-
+        
         # users test data
         self.users =[
             {
@@ -126,3 +126,8 @@ class BaseTest(unittest.TestCase):
         self.rsvp={"status":"yes"}
         self.get_url = 'api/v2/meetups/2'
         self.post_url ='api/v2/meetups/'
+
+    def tearDown(self):
+        """teardown all the test data"""
+        with self.app.app_context():
+            drop_tables()
