@@ -88,7 +88,7 @@ def login():
         
         return jsonify({ "status": 201,
                 "message":"user logged in successfully",
-                "data":user_loggedIn
+                "data":user_loggedIn,
             }), 201
     else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401

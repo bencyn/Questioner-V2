@@ -1,9 +1,9 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import app,re
 from app.api.v2.models import user_model
 from ..utils.validators import Validators
-
 
 user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/users')
 auth_v2 = Blueprint('auth_v2',__name__, url_prefix='/api/v2/auth')
@@ -14,12 +14,14 @@ validator = Validators()
 @user_v2.route("/all", methods=['GET'])
 def getUsers():
     ''' this endpoints allows a user fetch all registered users'''
-    return jsonify(user_object.get_users()),200
+    pass
+    # return jsonify(user_object.get_users()),200
 
 @user_v2.route("/<int:id>", methods = ['GET'])
 def getMeetup(id):
     ''' this endpoints allows a user get a specific meetup'''
-    return jsonify(user_object.get_user(id)),200
+    pass
+    # return jsonify(user_object.get_user(id)),200
 
 @user_v2.route('/', methods = ['POST'])
 def register():
@@ -53,8 +55,12 @@ def register():
                 return jsonify({'status': 400,
                             'error': "email provided is invalid"}),400
 
-    user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
-    
+    passwordHash = generate_password_hash(password)
+    user_details ={"firstname":firstname,"lastname":lastname,"othername":othername,"email":email,
+                "phoneNumber":phoneNUmber,"username":username,"password":passwordHash,"isAdmin":isAdmin,}
+
+    user =user_object.create_user(**user_details)
+
     return jsonify({
         "status": 201,
         "data":user
@@ -80,24 +86,28 @@ def login():
                 "error": "{} cannot be empty".format(key)
             })), 400
 
-    users = user_object.users
+    user = user_object.get_user_by_username(username)
     
-    if any(y['username'] == username for y in users) and any(y['password'] == password for y in users):
-        access_token = app.create_access_token(identity=username)
-        user_loggedIn = user_object.login_user(username,password,access_token)
-        
-        return jsonify({ "status": 201,
+    if user:
+        if check_password_hash(user[1], password):
+            access_token = app.create_access_token(identity=username)
+            return jsonify({ 
+                "status": 201,
+                "data":[{
+                    "token":access_token,
+                    "user":user
+                }],
                 "message":"user logged in successfully",
-                "data":user_loggedIn
             }), 201
-    else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401
+    else:
+        return jsonify({'msg': 'user does not exist' }), 404
 
 
 @auth_v2.route('/token', methods=['GET'])
 @app.jwt_required
 def protected():
-    # Access the identity of the current user with get_jwt_identity
+    """ access identity of the current user """
     current_user = app.get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
 
