@@ -5,25 +5,35 @@ import app,re
 from app.api.v2.models import user_model
 from ..utils.validators import Validators
 
-user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/users')
-auth_v2 = Blueprint('auth_v2',__name__, url_prefix='/api/v2/auth')
+user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/auth')
+auth_v2 = Blueprint('auth_v2',__name__, url_prefix='/api/v2/auths')
 
 user_object = user_model.User()
 validator = Validators()
 
 @user_v2.route("/all", methods=['GET'])
+@app.jwt_required
 def getUsers():
-    ''' this endpoints allows a user fetch all registered users'''
-    pass
-    # return jsonify(user_object.get_users()),200
+    ''' this endpoints allows a user to fetch all registered users'''
+    users = user_object.get_all("users")
+    return jsonify({
+        "status":200,
+        "users":users
+    }),200
 
 @user_v2.route("/<int:id>", methods = ['GET'])
-def getMeetup(id):
-    ''' this endpoints allows a user get a specific meetup'''
-    pass
-    # return jsonify(user_object.get_user(id)),200
+@app.jwt_required
+def getUser(id):
+    ''' this endpoints allow a user to get a specific user by id'''
+    # id = str(id)
+    user =user_object.get_record_by_id("users","id",id)
+    return jsonify({
+        "status":200,
+        "user":user
+    }),200
+   
 
-@user_v2.route('/', methods = ['POST'])
+@user_v2.route('/signup', methods = ['POST'])
 def register():
     """ this endpoint allows unregistered users to signup """
     data = request.get_json()
@@ -35,10 +45,10 @@ def register():
     lastname = request.get_json()['lastname']
     othername = request.get_json()['othername']
     email = request.get_json()['email']
-    phoneNUmber = request.get_json()['phoneNUmber']
+    phone_number = request.get_json()['phone_number']
     password = request.get_json()['password']
     username = request.get_json()['username']
-    isAdmin = request.get_json()['isAdmin']
+    is_admin = request.get_json()['is_admin']
 
     val_input = {"username":username,"email":email,"password":password}
 
@@ -56,15 +66,13 @@ def register():
                             'error': "email provided is invalid"}),400
 
     passwordHash = generate_password_hash(password)
+    access_token = app.create_access_token(identity=username)
     user_details ={"firstname":firstname,"lastname":lastname,"othername":othername,"email":email,
-                "phoneNumber":phoneNUmber,"username":username,"password":passwordHash,"isAdmin":isAdmin,}
-
+                "phone_number":phone_number,"username":username,"password":passwordHash,"is_admin":is_admin,"token":access_token}
+    
     user =user_object.create_user(**user_details)
-
-    return jsonify({
-        "status": 201,
-        "data":user
-    }), 201
+    return user
+ 
 
 
 @user_v2.route('/login', methods = ['POST'])
@@ -89,12 +97,13 @@ def login():
     user = user_object.get_user_by_username(username)
     
     if user:
-        if check_password_hash(user[1], password):
-            access_token = app.create_access_token(identity=username)
+        validate_password = check_password_hash(user["password"], password)
+        if validate_password:
+            jwt_token = app.create_access_token(identity=username)
             return jsonify({ 
                 "status": 201,
                 "data":[{
-                    "token":access_token,
+                    "token":jwt_token,
                     "user":user
                 }],
                 "message":"user logged in successfully",
