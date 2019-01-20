@@ -1,9 +1,7 @@
 import json ,unittest,instance,datetime
 from app import create_app
 from ... import create_app
-# from ...api.v2.database.database_connection import (create_database_tables,
-#                                                     drop_all_tables, 
-#                                                     all_test_data)
+
 from app.database.connect import Connection
 app = create_app("testing")
 class BaseTest(unittest.TestCase):
@@ -13,7 +11,7 @@ class BaseTest(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         with self.app.app_context():
-            self.test_db = Connection().test_db_init
+            self.test_db = Connection().test_db_init()
         """ defining test data"""
         
         # users test data
