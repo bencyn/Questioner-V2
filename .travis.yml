@@ -16,7 +16,9 @@ before_script:
  
 # Run tests
 script:
-     - pytest 
+    - export APP_SETTINGS="testing"
+    - export SECRET_KEY="#Wnsk#&)!!@!iuewqoiuqo@#@#!"
+    - pytest 
 
 after_success:
     - coveralls
