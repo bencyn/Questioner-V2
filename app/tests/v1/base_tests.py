@@ -45,7 +45,7 @@ class BaseTest(unittest.TestCase):
         # Get user token
         self._post_register_request(self.users[0])
         self.loging_data = {"username":"bencyn","password":"ben742285"}
-
+        
         # meetup data fields
         self.meetups = [
             {
