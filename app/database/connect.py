@@ -17,8 +17,10 @@ class Connection:
 
     def db_init(self):
         """ setup database """
+        url ="dbname='questioner' host='localhost' port='5432' user='postgres' password='ben742285'"
         # url = current_app.config['DATABASE_URL']
-        url = os.getenv('DATABASE_URL')
+        # url = os.getenv('DATABASE_URL')
+        # url = current_app.config['DATABASE_URL']
         self.conn = self.connect_db(url)
         self.create_tables(self.conn)
         return self.conn
