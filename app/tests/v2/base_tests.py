@@ -5,7 +5,7 @@ from ... import create_app
 #                                                     drop_all_tables, 
 #                                                     all_test_data)
 from app.database.connect import Connection
-
+app = create_app("testing")
 class BaseTest(unittest.TestCase):
     '''main test configurations '''
 
