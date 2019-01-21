@@ -1,6 +1,6 @@
 from datetime import datetime
 import psycopg2, os
-from app.database.connect import Connection
+from app.database.connect import db_init
 from flask import Flask, json, jsonify
 from .base_model import BaseModel
 
@@ -10,8 +10,7 @@ class User(BaseModel):
 
     def __init__(self):
         """initialize and define objects """
-        BaseModel.__init__(self)
-        self.conn=None
+        pass
 
     def create_user(self,**kwargs):
         """ create a user account in users table """
