@@ -2,57 +2,48 @@ import psycopg2 ,os
 from flask import current_app
 from app.database import migrations
 
-class Connection:
+def connect_db(url):
+    """ initiate a database connection"""
+    try:
+        conn = psycopg2.connect(url)
+        return conn
+    except psycopg2.DatabaseError as e:
+        return {'message': '{}'.format(e)}
 
-    def __init__(self):
-        pass
+def db_init():
+    """ setup database """
+    url = current_app.config['DATABASE_URL']
+    conn = connect_db(url)
+    create_tables(conn)
+    return conn
 
-    def connect_db(self,url):
-        """ initiate a database connection"""
-        try:
-            self.conn = psycopg2.connect(url)
-            return self.conn
-        except psycopg2.DatabaseError as e:
-            return {'message': '{}'.format(e)}
+def test_db_init():
+    """" setup database in test environment """
 
-    def db_init(self):
-        """ setup database """
-        url ="dbname='questioner' host='localhost' port='5432' user='postgres' password='ben742285'"
-        # url = current_app.config['DATABASE_URL']
-        # url = os.getenv('DATABASE_URL')
-        # url = current_app.config['DATABASE_URL']
-        self.conn = self.connect_db(url)
-        self.create_tables(self.conn)
-        return self.conn
+    url = os.getenv('TEST_DATABASE_URL')
+    conn = connect_db(url)
+    create_tables(conn)
+    return conn
 
-    def test_db_init(self):
-        """" setup database in test environment """
+def create_tables(conn):
+    """create tables in the database"""
+    curr = conn.cursor()
+    tables = migrations.tables()
 
-        url = os.getenv('TEST_DATABASE_URL')
-        self.conn = self.connect_db(url)
-        self.create_tables(self.conn)
-        self.conn.commit()
-        return self.conn
+    for query in tables:
+        curr.execute(query)
+    conn.commit()
+    
 
-    def create_tables(self,conn):
-        """create tables in the database"""
-        curr = conn.cursor()
-        tables = migrations.tables()
-
-        for query in tables:
+def drop_tables():
+    """destroy test database """
+    test_url = os.getenv('TEST_DATABASE_URL')
+    conn = connect_db(test_url)
+    curr = conn.cursor()
+    queries = migrations.tables_to_drop()
+    try:
+        for query in queries:
             curr.execute(query)
         conn.commit()
-        
-
-    def drop_tables(self):
-        """destroy test database """
-        test_url = os.getenv('TEST_DATABASE_URL')
-        conn = self.connect_db(test_url)
-        curr = conn.cursor()
-        queries = migrations.tables_to_drop()
-        try:
-            for query in queries:
-                curr.execute(query)
-            conn.commit()
-        except:
-            print("Fail")
+    except:
+        print("Fail")
