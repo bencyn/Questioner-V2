@@ -7,10 +7,10 @@ def tables():
         lastname  character varying(50) NOT NULL,
         othername character varying(50) NOT NULL,
         email  character varying(50) UNIQUE,
-        phoneNumber numeric NOT NULL,
-        username character varying(50) NOT NULL,
+        phone_number character varying(10) NOT NULL,
+        username character varying(50) NOT NULL UNIQUE,
         password character varying(200) NOT NULL,
-        isAdmin boolean,
+        is_admin character varying(10) NOT NULL,
         registered timestamp default current_timestamp
     );"""
 
@@ -56,6 +56,6 @@ def tables_to_drop():
     questions = """ DROP TABLE IF EXISTS questions CASCADE """
     rsvps = """ DROP TABLE IF EXISTS rsvps CASCADE """
 
-    tables =[users,meetups,questions,rsvps]
+    tables_to_drop =[users,meetups,questions,rsvps]
 
-    return tables
+    return tables_to_drop
