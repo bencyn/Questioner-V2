@@ -1,6 +1,6 @@
 import psycopg2, os
 from psycopg2.extras import RealDictCursor
-from app.database.connect import Connection
+from app.database.connect import db_init
 from flask import Flask, json, jsonify
 
 class BaseModel:
@@ -8,12 +8,12 @@ class BaseModel:
 
     def __init__(self):
         """ initialize database """
-        self.conn = Connection().db_init()
+        self.conn =db_init()
         self.cursor = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def save_data(self,sql,**kwargs):
         """save queries"""
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         cur=self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         try:
             cur.execute(sql)
@@ -31,7 +31,7 @@ class BaseModel:
   
     def check_if_exists(self, table, field, data):
         """ check if a record or records exist """
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         cur=self.conn.cursor()
         query = "SELECT * FROM {} WHERE {}='{}'".format(table, field, data)
         # return cur.fetchone() is not None
@@ -44,7 +44,7 @@ class BaseModel:
     def get_user_by_username(self,username):
         """ get user by username """
         
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         cur=self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         self.username =username
         query="""SELECT username, password FROM users WHERE username = '{}'""".format(self.username)
@@ -56,7 +56,7 @@ class BaseModel:
 
     def get_all(self,table):
         """ get all records"""
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         table = "users"
         cur=self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         query="""SELECT * FROM {} """.format(table)
@@ -70,7 +70,7 @@ class BaseModel:
 
     def get_record_by_id(self,table,field,value):
         """ get records  by id"""
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         cur=self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         value = int(value)
         query = """SELECT * FROM users WHERE users.id=%d;"""%(value)
@@ -85,7 +85,7 @@ class BaseModel:
             return result
 
     def execute_query(self,query):
-        self.conn = Connection().db_init()
+        self.conn = db_init()
         cur=self.conn.cursor()
         cur.execute(query)
         self.conn.commit()
