@@ -1,8 +1,6 @@
 import json ,unittest,instance,datetime
 from app import create_app
-from ... import create_app
-
-from app.database.connect import Connection
+from app.database.connect import (test_db_init,drop_tables)
 app = create_app("testing")
 class BaseTest(unittest.TestCase):
     '''main test configurations '''
@@ -11,7 +9,7 @@ class BaseTest(unittest.TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         with self.app.app_context():
-            self.test_db = Connection().test_db_init()
+            self.test_db = test_db_init()
         """ defining test data"""
         
         # users test data
@@ -168,4 +166,4 @@ class BaseTest(unittest.TestCase):
     def tearDown(self):
         """teardown all the test data"""
         with self.app.app_context():
-            Connection().drop_tables()
+            drop_tables()
