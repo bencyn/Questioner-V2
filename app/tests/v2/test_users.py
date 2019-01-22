@@ -1,16 +1,18 @@
 import json ,unittest,instance,datetime
 from .base_tests import BaseTest
-from app import create_app
-
-app = create_app("testing")
 
 class TestUser(BaseTest):
 
-    # def test_if_user_can_create_account(self):
-    #     ''' test user can create an account successfully'''
-    #     response= self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
-    #     self.assertEqual(response.status_code, 201)
+    def setUp(self):
+        BaseTest.setUp(self)
 
+    def test_if_user_can_create_account(self):
+        ''' test user can create an account successfully'''
+        response= self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+        
+
+    
     def test_empty_register_post_data(self):
         """ test if user can register with empty data"""
         self.user2=[]
@@ -37,36 +39,33 @@ class TestUser(BaseTest):
         self.assertEqual(response.status_code,400)
     
     def test_get_all_users(self):
-     
-        response = self.client.get(self.get_url,
-                                    content_type = "application/json",
-                                    headers=self._get_header()
-                                )
+        self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
+        response = self.client.get(self.get_users_url,content_type = "application/json")
         self.assertEqual(response.status_code, 200)
         
 
     def test_get_user_by_id(self):
-        self.get_by_id_url = 'api/v2/auth/1'
-        
+        post_response= self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
+        post_result = json.loads(post_response.data.decode('utf-8'))
+        id = post_result["user"][0]["id"]
+        self.get_by_id_url = 'api/v2/auth/{}'.format(id)
         response = self.client.get(self.get_by_id_url, 
-                                    content_type="application/json",
-                                    headers=self._get_header())
-
+                                    content_type="application/json")
         self.assertEqual(response.status_code,200)
         result = json.loads(response.data.decode('utf-8'))
-        # self.assertEqual(result["username"],self.users[1]["username"])
+        self.assertEqual(result["user"][0]["username"],self.users[0]["username"])
 
-  
+
     def test_if_user_can_login(self):
         """ tests if user can login successfully with correct credentials """
        
-        self._post_register_request(self.users[0])
-        response = self._post_login_request(self.loging_data)
+        self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
+        response = self.client.post(self.login_url, data = json.dumps(self.loging_data), content_type="application/json")
         self.assertEqual(response.status_code,201)
-        # test if data output matches our input
+
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result["message"],'user logged in successfully')
-        # self.assertEqual(result["data"]["password"],self.loging_data["password"])
+        self.assertEqual(result["data"][0]["user"]["username"],self.loging_data["username"])
       
     
     def test_login_username_empty(self):
