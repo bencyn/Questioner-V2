@@ -64,8 +64,9 @@ class TestUser(BaseTest):
         self.assertEqual(response.status_code,201)
 
         result = json.loads(response.data.decode('utf-8'))
+        print(result)
         self.assertEqual(result["message"],'user logged in successfully')
-        self.assertEqual(result["data"][0]["user"]["username"],self.loging_data["username"])
+        self.assertEqual(result["data"][0]["user"][0]["username"],self.loging_data["username"])
       
     
     def test_login_username_empty(self):
