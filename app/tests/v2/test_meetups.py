@@ -6,8 +6,3 @@ app = create_app("testing")
 
 class TestMeetup(BaseTest):
     pass
-if __name__ == "__main__":
-    unittest.main()
-   
-
-    
