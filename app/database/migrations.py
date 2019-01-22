@@ -16,12 +16,13 @@ def tables():
 
     meetups = """CREATE TABLE IF NOT EXISTS meetups(
         id serial PRIMARY KEY NOT NULL,
-        happenningOn date NOT NULL,
+        happening_on date NOT NULL,
         location character varying(50) NULL,
         images text NULL,
         topic character varying(200) NOT NULL,
         tags text NULL,
-        createdOn timestamp default current_timestamp
+        user_id character varying(200) NOT NULL,
+        created_on timestamp default current_timestamp
     );"""
 
 
@@ -29,11 +30,11 @@ def tables():
         id serial PRIMARY KEY NOT NULL,
         meetup_id numeric NOT NULL,
         user_id numeric NOT NULL,
-        createdBy numeric NOT NULL,
+        created_by numeric NOT NULL,
         title character varying(200) NOT NULL,
         body text NOT NULL,
         votes integer DEFAULT 0,
-        createdOn timestamp with time zone DEFAULT ('now'::text)::date NOT NULL
+        created_on timestamp with time zone DEFAULT ('now'::text)::date NOT NULL
     );"""
 
     rsvps = """CREATE TABLE IF NOT EXISTS rsvps(
@@ -41,7 +42,7 @@ def tables():
         meetup_id numeric NOT NULL,
         user_id numeric NOT NULL,
         response character varying(200) NOT NULL,
-        createdOn timestamp with time zone DEFAULT ('now'::text)::date NOT NULL
+        created_on timestamp with time zone DEFAULT ('now'::text)::date NOT NULL
     );"""
 
     tables =[users,meetups,questions,rsvps]
