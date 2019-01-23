@@ -9,11 +9,9 @@ class Meetup(BaseModel):
 
     def __init__(self):
         """initialize and define objects """
-        pass
         super().__init__()
     def create_meetup(self,**kwargs):
         """ create a meetup record """
-        #  meetup_details = {"topic":topic,"location":location,"images":images,"happening_on":happening_on,"tags":tags}
         self.topic= kwargs['topic']
         self.location= kwargs['location']
         self.images= kwargs['images']
