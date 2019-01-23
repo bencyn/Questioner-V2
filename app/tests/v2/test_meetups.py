@@ -6,6 +6,7 @@ app = create_app("testing")
 
 class TestMeetup(BaseTest):
     def setUp(self):
+        """define test meetup variables"""
         BaseTest.setUp(self)
         self.get_meetups_url='api/v2/meetups/upcoming/'
         self.get_meetup_url = 'api/v2/meetups/1'
@@ -14,7 +15,7 @@ class TestMeetup(BaseTest):
 
 
     def _post_url(self):
-
+        """define meetup post url"""
         self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
         login_response = self.client.post(self.login_url, data = json.dumps(self.loging_data), content_type="application/json") 
         login_result = json.loads(login_response.data.decode('utf-8'))
