@@ -4,6 +4,7 @@ from .base_tests import BaseTest
 class TestUser(BaseTest):
 
     def setUp(self):
+        """define test user variables"""
         BaseTest.setUp(self)
 
     def test_if_user_can_create_account(self):
@@ -35,16 +36,19 @@ class TestUser(BaseTest):
         self.assertEqual(response.status_code,400)
 
     def test_missing_register_data(self):
+        """ test if user can register when he/she provides missing input"""
         response = self._post_register_request()
         self.assertEqual(response.status_code,400)
     
     def test_get_all_users(self):
+        """ test if user can get all registered users"""
         self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
         response = self.client.get(self.get_users_url,content_type = "application/json")
         self.assertEqual(response.status_code, 200)
         
 
     def test_get_user_by_id(self):
+        """test if user can get a record of a specific user"""
         post_response= self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
         post_result = json.loads(post_response.data.decode('utf-8'))
         id = post_result["user"][0]["id"]
