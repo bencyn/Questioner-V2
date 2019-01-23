@@ -9,6 +9,7 @@ class TestMeetup(BaseTest):
         BaseTest.setUp(self)
         self.get_meetups_url='api/v2/meetups/upcoming/'
         self.get_meetup_url = 'api/v2/meetups/1'
+        self.delete_meetup_url = 'api/v2/meetups/1'
         self.post_meetup_url=None
 
 
@@ -57,4 +58,11 @@ class TestMeetup(BaseTest):
 
     def test_if_user_can_delete_specific_meetup_record(self):
         """tests whether user can delete a specific meetup record"""
-        pass
+        
+        url = self._post_url()
+        self.client.post(url,data = json.dumps(self.meetups[0]),content_type="application/json",headers=self._get_header())
+        self.client.post(url,data = json.dumps(self.meetups[1]),content_type="application/json",headers=self._get_header())
+
+        response = self.client.delete(self.delete_meetup_url, content_type="application/json",headers=self._get_header())
+
+        self.assertEqual(response.status_code,200)
