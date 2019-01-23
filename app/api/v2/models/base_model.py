@@ -67,6 +67,18 @@ class BaseModel:
         except ValueError as e:
             message = {'message': '{}'.format(e)}
             return jsonify({"status": 400,"error":message}), 400
+    
+    def delete_by_key(self,table,field,value):
+        """ delete record by id"""
+        query = "DELETE FROM {} WHERE {}={}".format(table,field,value)
+        try:
+            conn.cursor.execute(query)
+            conn.connection.commit()
+            return True
+        except ValueError as e:
+            message = {'message': '{}'.format(e)}
+            return jsonify({"status": 400,"error":message}), 400
+       
 
     def execute_query(self,query):
         conn.cursor.execute(query)
