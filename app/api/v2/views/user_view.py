@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import app,re
 from app.api.v2.models import user_model
-from ..utils.validators import Validators
+from app.api.utils.validators import Validators
 
 user_v2 = Blueprint('user_v2', __name__, url_prefix='/api/v2/auth')
 auth_v2 = Blueprint('auth_v2',__name__, url_prefix='/api/v2/auths')
@@ -12,7 +12,7 @@ user_object = user_model.User()
 validator = Validators()
 
 @user_v2.route("/all", methods=['GET'])
-def getUsers():
+def get_all_users():
     ''' this endpoints allows a user to fetch all registered users'''
     users = user_object.get_all("users")
     return jsonify({
@@ -21,7 +21,7 @@ def getUsers():
     }),200
 
 @user_v2.route("/<int:id>", methods = ['GET'])
-def getUser(id):
+def get_user(id):
     ''' this endpoints allow a user to get a specific user by id'''
     user =user_object.get_by_key("users","id",id)
     if user:
@@ -52,7 +52,7 @@ def register():
     password = request.get_json()['password']
     username = request.get_json()['username']
     is_admin = request.get_json()['is_admin']
-
+    
     val_input = {"firstname":firstname,"lastname":lastname,"username":username,
         "email":email,"password":password}
    
@@ -78,26 +78,23 @@ def login():
 
     username = request.get_json()['username']
     password = request.get_json()['password']
-    
-    val_input = {"username":username,"password":password}
+    # confirm_password = request.get_json()['confirm_password']
 
+
+    val_input = {"username":username,"password":password}
     validate = validator._validate(val_input)
    
     if validate:
         return validate
     else:
         user = user_object.get_by_key("users","username",username)
-        
         if user:
             validate_password = check_password_hash(user[0]["password"], password)
             if validate_password:
                 jwt_token = app.create_access_token(identity=username)
                 return jsonify({ 
                     "status": 201,
-                    "data":[{
-                        "token":jwt_token,
-                        "user":user
-                    }],
+                    "data":[{"token":jwt_token,"user":user}],
                     "message":"user logged in successfully",
                 }), 201
             return jsonify({'msg': 'incorrect username/password combination' }), 401
@@ -111,5 +108,3 @@ def protected():
     """ access identity of the current user """
     current_user = app.get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
-
-
