@@ -15,7 +15,6 @@ class Connection:
         self.app = app
         url =app.config.get("DATABASE_URL")
         self.connection = psycopg2.connect(url)
-        # self.connection = psycopg2.connect(dbname=app.config.get("DATABASE_NAME"), user=app.config.get("DATABASE_USER"), password=app.config.get("DATABASE_PASSWORD"),port='5432', host=app.config.get("DATABASE_HOST"))
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def create_tables(self):
