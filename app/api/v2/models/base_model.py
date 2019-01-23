@@ -17,6 +17,9 @@ class BaseModel:
 
         return result
     
+    def update_data(self,sql):
+        """ define global update function """
+        pass
   
     def check_if_exists(self, table, field, data):
         """ check if a record or records exist """
