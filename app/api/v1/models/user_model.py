@@ -11,21 +11,19 @@ class User(object):
         self.users = users
         self.logged_in_user = logged_in_users
 
-    def create_user(self,firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin):
+    def create_user(self,**kwargs):
         """ create a user account"""
-        #  user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
-        
         user = {
             "id" : len(self.users)+ 1,
-            "firstname" :firstname,
-            "lastname": lastname,
-            "othername" : othername,
-            "email" : email,
-            "phoneNumber" : phoneNUmber,
-            "username" : username,
-            "password":password,
+            "firstname" :kwargs['firstname'],
+            "lastname": kwargs['lastname'],
+            "othername" : kwargs['othername'],
+            "email" :kwargs['email'],
+            "phone_number" :  kwargs['phone_number'],
+            "username" : kwargs['username'],
+            "password":kwargs['password'],
             "registered" :datetime.now(),
-            "isAdmin" :isAdmin
+            "isAdmin" :kwargs.get('is_admin','0')
         }
         self.users.append(user)
 
