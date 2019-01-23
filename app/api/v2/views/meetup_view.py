@@ -2,7 +2,7 @@ from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from ..models import meetup_model,user_model
 from ..views.user_view import user_v2
-from ..utils.validators import Validators
+from app.api.utils.validators import Validators
 import app
 
 meetup_v2 = Blueprint('meetup_v2', __name__, url_prefix='/api/v2/meetups')
@@ -11,7 +11,7 @@ user_object = user_model.User()
 validator = Validators()
 
 @meetup_v2.route("/upcoming/", methods=['GET'])
-def getMeetups():
+def get_upcoming_meetups():
     ''' fetch all meetup records'''
     meetup =meetup_object.get_all("meetups")
     return jsonify({
@@ -20,7 +20,7 @@ def getMeetups():
     }),200
 
 @meetup_v2.route("/<int:id>", methods = ['GET'])
-def getMeetup(id):
+def get_specific_meetup(id):
     ''' this function gets a  specific meetup by id'''
     meetup =meetup_object.get_by_key("meetups","id",id)
     if meetup:
@@ -37,7 +37,7 @@ def getMeetup(id):
 
 @meetup_v2.route("/<int:id>", methods = ['DELETE'])
 @app.jwt_required
-def deleteMeetup(id):
+def delete_meetup(id):
     ''' this function gets a  specific meetup by id'''
     meetup =meetup_object.get_by_key("meetups","id",id)
     if meetup:
@@ -74,14 +74,11 @@ def create_meetup(id):
             return validate
         else:
             user = user_object.get_by_key("users","id",id)
-                
             if user:
                 admin = user[0]["is_admin"] 
                 if admin == "1":
                     meetup_details = {"topic":topic,"location":location,"images":images,"happening_on":happening_on,"tags":tags,"user_id":id}
                     meetup = meetup_object.create_meetup(**meetup_details)
-
-                    # return meetup
                     return jsonify({ 
                         "status": 201,
                         "data":meetup,
