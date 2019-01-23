@@ -4,21 +4,21 @@ import os
 class Config(object):
     '''Parent configuration class'''
     
-    DEBUG = False
-    ENV = 'development'
     SECRET = os.getenv('SECRET')
-    DATABASE_URL =os.getenv('DATABASE_URL')
-    TEST_DATABASE_URL =os.getenv('TEST_DATABASE_URL')
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    DEBUG = True
+    TESTING = False
 
-
+    
 class DevelopmentConfig(Config):
     '''configurations for development environment'''
     DEBUG = True
 
 class TestingConfig(Config):
     '''configurations for test environment'''
-    DEBUG = True
-
+    TESTING = True
+    DEBUG=True
+    DATABASE_URL = os.getenv("TEST_DATABASE_URL")
 
 class ProductionConfig(Config):
     '''configurations for production environment'''

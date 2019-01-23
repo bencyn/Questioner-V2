@@ -1,28 +1,22 @@
 import json ,unittest,instance,datetime
-from app import create_app
-from app.database.connect import (test_db_init,drop_tables)
-app = create_app("testing")
+from app import create_app,conn
+
 class BaseTest(unittest.TestCase):
     '''main test configurations '''
 
     def setUp(self):
-        self.app = create_app("testing")
-        self.client = self.app.test_client()
-        with self.app.app_context():
-            self.test_db = test_db_init()
-        """ defining test data"""
-        
-        # users test data
+        """define global variables"""
+        self.client = create_app(config="testing").test_client()
         self.users =[
             {
                 "firstname" :"benson",
-                "lastname": "kamaa",
+                "lastname": "njunge",
                 "othername" :"wamolito",
                 "email" :"njung39@gmail.com",
                 "password":"ben742285",
                 "phone_number":"0790561841",
-                "username" :"ben",
-                "is_admin" :"0",
+                "username" :"bencyn",
+                "is_admin" :"1",
             },
             {
                 "firstname" :"njeru",
@@ -36,7 +30,7 @@ class BaseTest(unittest.TestCase):
             }
         ]
         self.register_url = 'api/v2/auth/signup'
-        self.get_url = 'api/v2/auth/all'
+        self.get_users_url = 'api/v2/auth/all'
         self.login_url = 'api/v2/auth/login'
         
         # meetup test data
@@ -44,7 +38,7 @@ class BaseTest(unittest.TestCase):
             {
                 "location":"nairobi",
                 "topic":"Hackathon For The Brave",
-                "happeningOn":"2019-20-23",
+                "happening_on":"2019-12-01",
                 "tags":"UI,UX",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456471610.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
@@ -52,8 +46,8 @@ class BaseTest(unittest.TestCase):
             {
                 "location":"nyahururu",
                 "topic":"Ethical Hacking Hackathon",
-                "happeningOn":"Monday 12 2018",
-                "tags": ["Pentests", "Bruteforce"],
+                "happening_on":"2019-03-15",
+                "tags": "Pentests,Bruteforce",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
             }]
@@ -103,29 +97,12 @@ class BaseTest(unittest.TestCase):
             "happeningOn": "Monday 12 2018",
             "tags":"Pentests,Bruteforce"
         }
-        self.meetups = [
-            {
-                "location":"nairobi",
-                "topic":"Hackathon For The Brave",
-                "happeningOn":"2019-20-23",
-                "tags":"UI,UX",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456471610.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            },
-            {
-                "location":"nyahururu",
-                "topic":"Ethical Hacking Hackathon",
-                "happeningOn":"Monday 12 2018",
-                "tags": "pentests,codebase",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            }]
         self.rsvp={"status":"yes"}
-        self.get_url = 'api/v2/meetups/2'
         self.post_url ='api/v2/meetups/'
 
     def _get_header(self):
         """return user header with token"""
+        
         self.client.post(self.register_url, data = json.dumps(self.users[0]), content_type="application/json")
         self.client.post(self.register_url, data = json.dumps(self.users[1]), content_type="application/json")
        
@@ -145,8 +122,8 @@ class BaseTest(unittest.TestCase):
         """ sends a post login request with the input passed as data """
         
         if input:
-            self.data = json.dumps(input)
-            response = self.client.post(self.login_url, data = self.data, content_type="application/json")
+            data = json.dumps(input)
+            response = self.client.post(self.login_url, data = data, content_type="application/json")
         else:
             response = self.client.post(self.login_url,content_type="application/json")
 
@@ -156,14 +133,14 @@ class BaseTest(unittest.TestCase):
         """ send a post regiter request with the input passed as data"""
         
         if input is True:
-            response = self.client.post(self.register_url, data = self.data, content_type="application/json")
+            data = json.dumps(input)
+            response = self.client.post(self.register_url, data = data, content_type="application/json")
         else:
             response = self.client.post(self.register_url,content_type="application/json")
 
         return response
        
-        
+    
     def tearDown(self):
         """teardown all the test data"""
-        with self.app.app_context():
-            drop_tables()
+        conn.drop_tables()

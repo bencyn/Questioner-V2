@@ -62,7 +62,6 @@ class TestUser(BaseTest):
         self._post_register_request(self.users[0])
         response = self._post_login_request(self.loging_data)
         self.assertEqual(response.status_code,201)
-        # test if data output matches our input
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result["data"]["username"],self.loging_data["username"])
         self.assertEqual(result["data"]["password"],self.loging_data["password"])

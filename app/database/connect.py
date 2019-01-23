@@ -1,49 +1,39 @@
-import psycopg2 ,os
-from flask import current_app
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from app.database import migrations
 
-def connect_db(url):
-    """ initiate a database connection"""
-    try:
-        conn = psycopg2.connect(url)
-        return conn
-    except psycopg2.DatabaseError as e:
-        return {'message': '{}'.format(e)}
+class Connection:
+    """Initializees the database"""
 
-def db_init():
-    """ setup database """
-    url = current_app.config['DATABASE_URL']
-    conn = connect_db(url)
-    create_tables(conn)
-    return conn
+    def __init__(self):
+        self.app = None
+        self.connection = None
+        self.cursor = None
+        
+    def init_db(self,app):
+        """Initializes the database connection"""
+        self.app = app
+        url =app.config.get("DATABASE_URL")
+        self.connection = psycopg2.connect(url)
+        self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
-def test_db_init():
-    """" setup database in test environment """
-
-    url = os.getenv('TEST_DATABASE_URL')
-    conn = connect_db(url)
-    create_tables(conn)
-    return conn
-
-def create_tables(conn):
-    """create tables in the database"""
-    curr = conn.cursor()
-    tables = migrations.tables()
-
-    for query in tables:
-        curr.execute(query)
-    conn.commit()
+    def create_tables(self):
+        """create tables in the database"""
+        tables = migrations.tables()
+        try:
+            for query in tables:
+                self.cursor.execute(query)
+            self.connection.commit()
+        except:
+            print("Fail")
     
 
-def drop_tables():
-    """destroy test database """
-    test_url = os.getenv('TEST_DATABASE_URL')
-    conn = connect_db(test_url)
-    curr = conn.cursor()
-    queries = migrations.tables_to_drop()
-    try:
-        for query in queries:
-            curr.execute(query)
-        conn.commit()
-    except:
-        print("Fail")
+    def drop_tables(self):
+        """destroy test database """
+        queries = migrations.tables_to_drop()
+        try:
+            for query in queries:
+                self.cursor.execute(query)
+                self.connection.commit()
+        except:
+            print("Fail")
