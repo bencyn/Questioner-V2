@@ -45,7 +45,7 @@ def create_meetup():
                 
         # pass user input
         user_input = {"topic":topic,"location":location,"images":images,"happeningOn":happeningOn,"tags":tags}
-        meetup = meetup_object.add_meetup(user_input)
+        meetup = meetup_object.add_meetup(**user_input)
         return jsonify({"status": 201,"data":meetup}), 201
 
 @meetup.route("/<int:meetup_id>/rsvps", methods = ['POST'])
