@@ -1,6 +1,4 @@
 from datetime import datetime
-# import psycopg2, os
-# from app.database.connect import db_init
 from flask import Flask, json, jsonify
 from .base_model import BaseModel
 
@@ -44,7 +42,6 @@ class User(BaseModel):
             }), 400
         else:
             save_user=self.save_data(sql)
-            # fetch user
             user = self.get_by_key("users","id",save_user["id"])
 
             return jsonify({"status": 201,
