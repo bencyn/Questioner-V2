@@ -1,7 +1,7 @@
 from flask import Flask, json, jsonify, request, make_response, Blueprint
 from datetime import datetime
 from app.api.v1.models import user_model
-from ..utils.validators import Validators
+from app.api.utils.validators import Validators
 import app,re
 
 user = Blueprint('user', __name__, url_prefix='/api/v1/users')
@@ -52,8 +52,10 @@ def register():
                                 value):
                 return jsonify({'status': 400,
                             'error': "email provided is invalid"}),400
-
-    user = user_object.create_user(firstname,lastname,othername,email,password,phoneNUmber,username,isAdmin)
+    user_details ={"firstname":firstname,"lastname":lastname,"othername":othername,"email":email,
+                    "phone_number":phoneNUmber,"username":username,"is_admin":isAdmin}
+        
+    user = user_object.create_user(**user_details)
     
     return jsonify({
         "status": 201,
@@ -87,9 +89,8 @@ def login():
         user_loggedIn = user_object.login_user(username,password,access_token)
         
         return jsonify({ "status": 201,
-                "message":"user logged in successfully",
-                "data":user_loggedIn,
-            }), 201
+                        "message":"user logged in successfully",
+                        "data":user_loggedIn,}), 201
     else:
         return jsonify({'msg': 'incorrect username/password combination' }), 401
 
