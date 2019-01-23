@@ -19,9 +19,8 @@ class Validators():
     
 
     def _validate(self,input):
-        
-        """ validate empty strings and email fields"""
 
+        """ validate empty strings and email fields"""
         for key,value in input.items():
             if not value.strip():
                 return make_response(jsonify({
