@@ -9,7 +9,7 @@ class Meetup(object):
         """ initialize and define meetup objects"""
         self.meetups = meetups
 
-    def add_meetup(self,args):
+    def add_meetup(self,**args):
         """ creates a meetup record"""
         createdOn = datetime.now()
         
