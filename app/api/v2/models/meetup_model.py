@@ -1,37 +1,36 @@
-from datetime import datetime
+# import psycopg2, os
+# from app.database.connect import db_init
+from flask import Flask, json, jsonify
+from .base_model import BaseModel
 
 
-
-class Meetup(object):
-    """ meetups class """
+class Meetup(BaseModel):
+    """ meetup class """
 
     def __init__(self):
-        """ initialize and define meetup objects"""
-        # self.meetups = meetups
-
-    def add_meetup(self,args):
-        """ creates a meetup record"""
-        createdOn = datetime.now()
+        """initialize and define objects """
+        pass
+        super().__init__()
+    def create_meetup(self,**kwargs):
+        """ create a meetup record """
+        #  meetup_details = {"topic":topic,"location":location,"images":images,"happening_on":happening_on,"tags":tags}
+        self.topic= kwargs['topic']
+        self.location= kwargs['location']
+        self.images= kwargs['images']
+        self.happening_on= kwargs['happening_on']
+        self.tags= kwargs['tags']
+        self.user_id= kwargs['user_id']
         
-        meetup = {
-            "topic": args["topic"],
-            "location": args["location"],
-            "createdOn": createdOn,
-            "images": args["images"],
-            "happeningOn": args["happeningOn"],
-            "tags": args['tags'],
-        }   
 
+        sql = """ INSERT INTO meetups (happening_on,location,images,topic,tags,user_id)
+                VALUES('{}','{}','{}','{}','{}','{}') RETURNING meetups.id;""".format(self.happening_on,self.location,self.images,self.topic,
+                self.tags,self.user_id)
+
+        save_meetup=self.save_data(sql)
+        meetup = self.get_by_key("meetups","id",save_meetup["id"])
         return meetup
-
-    def get_meetups(self):
-        """ return all meetup records """
+   
+    def login_user(self):
+        """"""
         pass
-
-
-    def get_meetup(self,id):
-        '''' get meetup record by id '''
-        pass
-        # for meetup in self.meetups:
-        #     if meetup["id"] == id:
-        #         return meetup
+  
