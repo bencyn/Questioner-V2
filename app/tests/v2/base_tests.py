@@ -5,6 +5,7 @@ class BaseTest(unittest.TestCase):
     '''main test configurations '''
 
     def setUp(self):
+        """define global variables"""
         self.client = create_app(config="testing").test_client()
         self.users =[
             {
@@ -15,7 +16,7 @@ class BaseTest(unittest.TestCase):
                 "password":"ben742285",
                 "phone_number":"0790561841",
                 "username" :"bencyn",
-                "is_admin" :"0",
+                "is_admin" :"1",
             },
             {
                 "firstname" :"njeru",
@@ -37,7 +38,7 @@ class BaseTest(unittest.TestCase):
             {
                 "location":"nairobi",
                 "topic":"Hackathon For The Brave",
-                "happeningOn":"2019-20-23",
+                "happening_on":"2019-12-01",
                 "tags":"UI,UX",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456471610.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
@@ -45,8 +46,8 @@ class BaseTest(unittest.TestCase):
             {
                 "location":"nyahururu",
                 "topic":"Ethical Hacking Hackathon",
-                "happeningOn":"Monday 12 2018",
-                "tags": ["Pentests", "Bruteforce"],
+                "happening_on":"2019-03-15",
+                "tags": "Pentests,Bruteforce",
                 "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
             
             }]
@@ -96,25 +97,7 @@ class BaseTest(unittest.TestCase):
             "happeningOn": "Monday 12 2018",
             "tags":"Pentests,Bruteforce"
         }
-        self.meetups = [
-            {
-                "location":"nairobi",
-                "topic":"Hackathon For The Brave",
-                "happeningOn":"2019-20-23",
-                "tags":"UI,UX",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456471610.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            },
-            {
-                "location":"nyahururu",
-                "topic":"Ethical Hacking Hackathon",
-                "happeningOn":"Monday 12 2018",
-                "tags": "pentests,codebase",
-                "images":"https://bencyn.github.io/Questioner/UI/images/456470.jpeg,https://bencyn.github.io/Questioner/UI/images/475058220.jpeg"
-            
-            }]
         self.rsvp={"status":"yes"}
-        # self.get_url = 'api/v2/meetups/2'
         self.post_url ='api/v2/meetups/'
 
     def _get_header(self):
